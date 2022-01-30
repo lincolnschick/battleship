@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Battleship</title>
+    </head>
+    <link rel="stylesheet" href="./battleship_files/style.css">
+    <body>
+        <div id="startmenu" class="gamepage" style="visibility:visible;">
+            <div class="box-container">
+                <div class="box">
+                    <h1 style="text-align: center;">BATTLESHIP</h1>
+                </div>
+                <div class="box">
+                    <button onclick="moveToShipSelect()">START</button>
+                </div>
+            </div>
+        </div>
+        <div id="shipselect" class="gamepage" style="visibility:hidden; margin-top:-100px;">
+            <div class="box-container">
+                <div class="box">
+                    <button class="shipselectbutton">1 SHIP</button>
+                    <button class="shipselectbutton">2 SHIPS</button>
+                    <button class="shipselectbutton">3 SHIPS</button>
+                    <button class="shipselectbutton">4 SHIPS</button>
+                    <button class="shipselectbutton">5 SHIPS</button>
+                </div>
+            </div>
+        </div>
+        <div id="p1shipplacement" class="gamepage" style="visibility:hidden; margin-top:-100px;">
+            <div class="box-container">
+                <div class="box">
+                    <h3 style="margin-right:10px;">Number of ships selected:</h3><h3 id="numberofshipsselected">0</h3>
+                </div>
+                <div class="box">
+                    <div id="container">
+                        
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="./battleship_files/battleship.js"></script>
+    <script type="text/javascript" src="./battleship_files/gamegrid.js"></script>
+</html>

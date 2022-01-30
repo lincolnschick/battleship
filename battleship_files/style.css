@@ -1,0 +1,44 @@
+/* Creating a box and box-container system where a box container is an element within the page and boxes are horizontally centered and stacked on top of each other */
+
+.box-container {
+	/* Adding a 25 pixel margin around the box-container */
+	margin: 25px;
+	/* Centering the box-container relative to the page */
+	margin-left: auto;
+	margin-right: auto;
+}
+  
+.box {
+	/* Setting size of box relative to the box-container */
+	width: 50%;
+	height: 20%;
+	/* Centering box horizontally inside of box-container */
+	margin: 0 auto;
+	/* Centering the element inside the box */
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+}
+
+.shipselectbutton {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+:root {
+	--grid-cols: 1;
+	--grid-rows: 1;
+}
+
+#container {
+	display: grid;
+	/* grid-gap: 1em; */
+	grid-template-rows: repeat(var(--grid-rows), 1fr);
+	grid-template-columns: repeat(var(--grid-cols), 1fr);
+}
+
+.grid-item {
+	padding: 1em;
+	border: 1px solid black;
+	text-align: center;
+  }
