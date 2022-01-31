@@ -30,7 +30,14 @@
 	--grid-rows: 1;
 }
 
-#container {
+#container1 {
+	display: grid;
+	/* grid-gap: 1em; */
+	grid-template-rows: repeat(var(--grid-rows), 1fr);
+	grid-template-columns: repeat(var(--grid-cols), 1fr);
+}
+
+#container2 {
 	display: grid;
 	/* grid-gap: 1em; */
 	grid-template-rows: repeat(var(--grid-rows), 1fr);
