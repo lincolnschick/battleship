@@ -26,13 +26,26 @@
                 </div>
             </div>
         </div>
-        <div id="p1shipplacement" class="gamepage" style="visibility:hidden; margin-top:-100px;">
+        <div id="p1shipprep" class="gamepage" style="visibility:hidden; margin-top:-100px;">
+            <div class="box-container">
+                <div class="box">
+                    <h1>Player 1</h1>
+                </div>
+                <div class="box" style="margin-top: 30px">
+                    <h1>Ready to start ship placement?</h1>
+                </div>
+                <div class="box">
+                    <button onclick="moveToPlayerOnePlacement()">GO</button>
+                </div>
+            </div>
+        </div>
+        <div id="p1shipplacement" class="gamepage" style="visibility:hidden; margin-top:-200px;">
             <div class="box-container">
                 <div class="box">
                     <h3 style="margin-right:10px;">Number of ships selected:</h3><h3 id="numberofshipsselected">0</h3>
                 </div>
                 <div class="box">
-                    <div id="container">
+                    <div id="container1">
                         
                     </div>
                 </div> 
@@ -40,5 +53,5 @@
         </div>
     </body>
     <script type="text/javascript" src="./static/battleship.js"></script>
-    <script type="text/javascript" src="./static/gamegrid.js"></script>
+    <script type="text/javascript" src="./static/gamegrid1.js"></script>
 </html>

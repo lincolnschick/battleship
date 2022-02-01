@@ -8,15 +8,20 @@ function moveToShipSelect() {
     for(let i = 0; i < shipSelectButtons.length; i++) {
         shipSelectButtons[i].addEventListener('click', () => {
             numberOfShips = i+1;
-            moveToPlayerOnePlacement();
+            moveToPlayerOnePlacementPrep();
         });
     }
 
 }
 
-function moveToPlayerOnePlacement() {
+function moveToPlayerOnePlacementPrep() {
     document.getElementById("shipselect").style.visibility = "hidden";
+    document.getElementById("p1shipprep").style.visibility = "visible";
+}
+
+function moveToPlayerOnePlacement() {
+    document.getElementById("p1shipprep").style.visibility = "hidden";
     document.getElementById("p1shipplacement").style.visibility = "visible";
 
-    const numberOfShipsSelectedCounter = document.getElementById("numberofshipsselected").innerText = numberOfShips;
+    document.getElementById("numberofshipsselected").innerText = numberOfShips;
 }
