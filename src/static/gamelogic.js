@@ -37,13 +37,13 @@ class Battleship {
     /** 
      * @return {bool} - whether game is over
      */
-     isGameOver() {
+    isGameOver() {
 
     }
     /** 
      * @return {int} - who won, player 1 or 2
      */
-     winner() {
+    winner() {
 
     }
 }
