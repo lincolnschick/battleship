@@ -13,35 +13,35 @@ class Battleship {
         this.numShips = numShips;
     }
     /** 
-     * @param {int} board - 1 or 2
-     * @return {bool} whether given board is valid for game to start
+     * @param {number} board - 1 or 2
+     * @return {boolean} whether given board is valid for game to start
      */
     isValid(board) {
 
     }
     /** 
-     * @return {int} whose turn it is (player 1 or 2)
+     * @return {number} whose turn it is (player 1 or 2)
     */
     player() {
 
     }
     /** 
      * Updates appropriate boards (one hidden one player board)
-     * @param {int} board - 1 or 2
-     * @param {int} i - row of guess
-     * @param {int} j - column of guess
+     * @param {number} board - 1 or 2
+     * @param {number} i - row of guess
+     * @param {number} j - column of guess
      */
     updateBoard(board, i, j) {
 
     }
     /** 
-     * @return {bool} - whether game is over
+     * @return {boolean} - whether game is over
      */
     isGameOver() {
 
     }
     /** 
-     * @return {int} - who won, player 1 or 2
+     * @return {number} - who won, player 1 or 2
      */
     winner() {
 
