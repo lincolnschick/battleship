@@ -5,12 +5,11 @@
 //Each cell in the board has multiple states...
 //-2 = ship was hit        -1 = empty space was hit
 // 0 = empty space          1 = ship in spot
-class gameBoard {
+class GameBoard {
     constructor(){
-        this.board = 
-            this.rows = 10;
-            this.cols = 10;
-            this.board = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
+        this.rows = 10;
+        this.cols = 10;
+        this.board = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
     }
 
     //A function that simply fires at the given cell and adjusts state accordingly
@@ -37,20 +36,41 @@ class gameBoard {
             }
         }
     }
+    /** 
+     * Will be called by Battleship class to inform front end
+     * @param {number} numShips - number of ships for game
+     * @return {boolean} whether board is valid for game to start
+     */
+    isValid(numShips) {
+
+    }
+    /** 
+     * Needed to implement the player method in the Battleship class
+     * @return {number} number of shots fired on board (-1s and -2s)
+     */
+    shots() {
+
+    }
+    /** 
+     * Needed for isGameOver in Battleship class
+     * @return {boolean} whether all ships have been sunk on this board
+     */
+     isSunk() {
+
+    }
+
 }
 /*----------------------------------------------------------------------------------------------------------------*/
 
+//This is the only class the front end will interact with
 class Battleship {
+    /** 
+     * @constructor
+     */
     constructor(numShips) {
-        //Note: I initialized boards to all 0s. Figured we could represent empty cells as 0s, 
-        //cells where ships are with 1s, and cells that were hit with -1.
-        //Hidden boards would not hold information about where ships are (only hits and empty)
-            //Temporarily commenting out (keeping just in case)
-            /*this.board1 = Array(rows).fill().map(() => Array(cols).fill(0));
-            this.board2 = Array(rows).fill().map(() => Array(cols).fill(0));
-            this.hidden1 = Array(rows).fill().map(() => Array(cols).fill(0));
-            this.hidden2 = Array(rows).fill().map(() => Array(cols).fill(0));
-            this.numShips = numShips;*/
+        this.numShips = numShips;
+        this.board1 = new GameBoard();
+        this.board2 = new GameBoard();
     }
     /** 
      * @param {number} board - 1 or 2
@@ -66,24 +86,39 @@ class Battleship {
 
     }
     /** 
-     * Updates appropriate boards (one hidden one player board)
+     * Updates appropriate board
      * @param {number} board - 1 or 2
-     * @param {number} i - row of guess
-     * @param {number} j - column of guess
+     * @param {number} row - row of guess
+     * @param {number} col - column of guess
      */
-    updateBoard(board, i, j) {
+    firedAt(board, row, col) {
 
     }
     /** 
-     * @return {boolean} - whether game is over
+     * @return {boolean} whether game is over, calls GameBoard method
      */
     isGameOver() {
 
     }
     /** 
-     * @return {number} - who won, player 1 or 2
+     * @return {number} who won, player 1 or 2
      */
     winner() {
+
+    }
+    /** 
+     * Calls appropriate board's placeShip method
+     * @param {number} board - 1 or 2
+     */
+    placeShip() {
+
+    }
+    /** 
+     * @param {number} board - 1 or 2, which board should be returned
+     * @param {boolean} [hidden=false] - whether given board should be returned with undiscovered ships hidden
+     * @return {[number, number]} 2D array of board given
+     */
+    getBoard(board, hidden=false) {
 
     }
 }
