@@ -92,7 +92,7 @@ class Battleship {
      * @param {number} col - column of guess
      */
     firedAt(board, row, col) {
-
+        board == 1 ? this.board1.firedAt(row, col) : this.board2.firedAt(row, col);
     }
     /** 
      * @return {boolean} whether game is over, calls GameBoard method
