@@ -104,7 +104,11 @@ class Battleship {
      * @return {number} who won, player 1 or 2
      */
     winner() {
-
+        //outside if can be placed when used
+        if (this.isGameOver()) {
+            if (this.board1.isSunk()) return 2;
+            else return 1;
+        }
     }
     /** 
      * Calls appropriate board's placeShip method
