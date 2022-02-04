@@ -12,7 +12,7 @@ class GameBoard {
         this.board = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
     }
 
-    //A function that simply fires at the given cell and adjusts state accordingly
+    //A method that simply fires at the given cell and adjusts state accordingly
     firedAt( row, col ){
         if ( this.board[ row ][ col ]  == 1 ){
             this.board[ row ][ col ] = -2;
@@ -21,7 +21,7 @@ class GameBoard {
         }
     }
 
-    //A function that adds a ship to the given cell
+    //A method that adds a ship to the given cell
     placeShip( row, col ){
         if ( this.board[ row ][ col ] == 0 ){
             this.board[ row ][ col ] = 1;
@@ -110,8 +110,8 @@ class Battleship {
      * Calls appropriate board's placeShip method
      * @param {number} board - 1 or 2
      */
-    placeShip(board) {
-
+    placeShip(board, row, col) {
+        board == 1 ? this.board1.placeShip(row, col) : this.board2.placeShip(row, col);
     }
     /** 
      * @param {number} board - 1 or 2, which board should be returned
