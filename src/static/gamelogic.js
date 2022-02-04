@@ -110,7 +110,7 @@ class Battleship {
      * Calls appropriate board's placeShip method
      * @param {number} board - 1 or 2
      */
-    placeShip() {
+    placeShip(board) {
 
     }
     /** 
