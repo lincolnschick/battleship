@@ -119,6 +119,17 @@ class Battleship {
      * @return {[number, number]} 2D array of board given
      */
     getBoard(board, hidden=false) {
-
+        //If the board parameter is 1, assign to board1's board otherwise assign it to board2's board
+        const returnBoard = board == 1 ? this.board1.board : this.board2.board;
+        if (hidden) {
+            //(Deep) copies every element except if it's a 1 then it becomes a 0 since we
+            //want to hide undiscovered ships.
+            let hiddenBoard = returnBoard.map(row => {
+                return row.map(val => val == 1 ? 0 : val);
+            });
+            return hiddenBoard;
+        } else {
+            return returnBoard;
+        }
     }
 }
