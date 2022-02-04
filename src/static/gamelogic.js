@@ -48,15 +48,30 @@ class GameBoard {
      * Needed to implement the player method in the Battleship class
      * @return {number} number of shots fired on board (-1s and -2s)
      */
+    //Goes through and counts the shots
     shots() {
-
+        let count = 0;
+        for ( let i = 0 ; i < this.rows ; i ++ ){
+            for ( let j = 0 ; j < this.cols ; j ++ ){
+                if ( this.board[ i ][ j ] == -1 || this.board[ i ][ j ]  == -2 ){
+                    count = count ++;
+                }
+            }
+        } return ( count ); 
     }
     /** 
      * Needed for isGameOver in Battleship class
      * @return {boolean} whether all ships have been sunk on this board
      */
-     isSunk() {
-
+    //Checks whether a ship still exists, if so return false, else return true.
+    isSunk() {
+        for ( let i = 0 ; i < this.rows ; i ++ ){
+            for ( let j = 0 ; j < this.cols ; j ++ ){
+                if ( this.board[ i ][ j ] == 1 ){
+                    return( false ); 
+                }
+            }
+        } return( true ); 
     }
 
 }
