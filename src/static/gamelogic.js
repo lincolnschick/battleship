@@ -98,7 +98,7 @@ class Battleship {
      * @return {boolean} whether game is over, calls GameBoard method
      */
     isGameOver() {
-
+        return(this.board1.isSunk() || this.board2.isSunk());
     }
     /** 
      * @return {number} who won, player 1 or 2
