@@ -99,7 +99,8 @@ class Battleship {
      * @return {number} whose turn it is (player 1 or 2)
     */
     player() {
-
+        //Returns 1 if board1 has fewer shots on it than board2, otherwise it returns 2.
+        return this.board1.shots() < this.board2.shots() ? 1 : 2;
     }
     /** 
      * Updates appropriate board
