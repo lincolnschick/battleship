@@ -92,7 +92,8 @@ class Battleship {
      * @return {boolean} whether given board is valid for game to start
      */
     isValid(board) {
-
+        //Calls appropriate isValid method for given board.
+        return board == 1 ? this.board1.isValid() : this.board2.isValid();
     }
     /** 
      * @return {number} whose turn it is (player 1 or 2)
