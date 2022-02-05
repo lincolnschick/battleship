@@ -109,12 +109,14 @@ class Battleship {
      * @param {number} col - column of guess
      */
     firedAt(board, row, col) {
+        //Calls firedAt for appropriate player
         board == 1 ? this.board1.firedAt(row, col) : this.board2.firedAt(row, col);
     }
     /** 
      * @return {boolean} whether game is over, calls GameBoard method
      */
     isGameOver() {
+        //determines if a player has lost
         return(this.board1.isSunk() || this.board2.isSunk());
     }
     /** 
@@ -123,8 +125,8 @@ class Battleship {
     winner() {
         //outside if can be placed when used
         if (this.isGameOver()) {
-            if (this.board1.isSunk()) return 2;
-            else return 1;
+            //return player 2 win if all of player 1's ships are sunk and vice versa
+            return this.board1.isSunk() ? 2 : 1;
         }
     }
     /** 
@@ -132,6 +134,7 @@ class Battleship {
      * @param {number} board - 1 or 2
      */
     placeShip(board, row, col) {
+        //Calls placeShip for appropriate player
         board == 1 ? this.board1.placeShip(row, col) : this.board2.placeShip(row, col);
     }
     /** 
