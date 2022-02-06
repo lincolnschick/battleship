@@ -5,11 +5,30 @@ function makeRowsST(rows, cols) {
   containerS.style.setProperty('--grid-cols', cols);
   for (let c = 0; c < (rows * cols); c++) {
     let cell = document.createElement("div");
-
-    cell.addEventListener("mouseover", function() {document.getElementById('cell' + "S" + c).className += ('-hovered');});
-    cell.addEventListener("mouseout", function() {document.getElementById('cell' + "S" + c).className = ('grid-item');});
     
-    containerS.appendChild(cell).className = "grid-item";
+    containerS.appendChild(cell).className = "grid-item-shiptablemember";
     containerS.appendChild(cell).id = 'cell' + "S" + c;
   };
 };
+
+function fillShips(num) {
+    for(let i = 0; i < num; i++) {
+        if(![1,4,8,13].includes(i)) {
+            document.getElementById("cell" + "S" + i).className += "-ship";
+        }
+    }
+
+    for(let i = 0; i < num; i++) {
+        if(i < 1) {
+
+        } else if (i > 1 && i < 4) {
+
+        } else if (i > 4 && i < 8) {
+
+        } else if (i > 8 && i < 13) {
+
+        } else if (i > 13) {
+            
+        }
+    }
+}

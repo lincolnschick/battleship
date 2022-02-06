@@ -32,21 +32,18 @@
 
 #container1 {
 	display: grid;
-	/* grid-gap: 1em; */
 	grid-template-rows: repeat(var(--grid-rows), 1fr);
 	grid-template-columns: repeat(var(--grid-cols), 1fr);
 }
 
 #container2 {
 	display: grid;
-	/* grid-gap: 1em; */
 	grid-template-rows: repeat(var(--grid-rows), 1fr);
 	grid-template-columns: repeat(var(--grid-cols), 1fr);
 }
 
 #containerS {
 	display: grid;
-	/* grid-gap: 1em; */
 	grid-template-rows: repeat(var(--grid-rows), 1fr);
 	grid-template-columns: repeat(var(--grid-cols), 1fr);
 }
@@ -56,6 +53,18 @@
 	border: 1px solid black;
 	text-align: center;
 	background-color: white;
+}
+
+.grid-item-shiptablemember {
+	padding: 1em;
+	text-align: center;
+	background-color: white;
+}
+
+.grid-item-shiptablemember-ship {
+	padding: 1em;
+	text-align: center;
+	background-color: rgb(56, 54, 54);
 }
 
 .grid-item-hovered {

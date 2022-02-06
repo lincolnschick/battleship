@@ -8,7 +8,9 @@ function moveToShipSelect() {
     for(let i = 0; i < shipSelectButtons.length; i++) {
         shipSelectButtons[i].addEventListener('click', () => {
             numberOfShips = i+1;
-            makeRowsST(1,numberOfShips);
+            let shipTableElements = (((numberOfShips * (numberOfShips + 1)) / 2) + (numberOfShips - 1));
+            makeRowsST(1,shipTableElements);
+            fillShips(shipTableElements);
             moveToPlayerOnePlacementPrep();
         });
     }
