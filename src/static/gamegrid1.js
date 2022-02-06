@@ -17,7 +17,7 @@ function makeRows(rows, cols) {
 makeRows(10, 10);
 
 function ordPair(id) {
-  let num = Number(id.slice(4));
+  let num = Number(id.slice(5));
   let i = Math.floor(num / 10);
   let j = num % 10;
   return [i, j];
