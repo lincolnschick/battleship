@@ -1,6 +1,6 @@
 const container1 = document.getElementById("container1");
 
-function makeRows(rows, cols) {
+function makeRows1(rows, cols) {
   container1.style.setProperty('--grid-rows', rows);
   container1.style.setProperty('--grid-cols', cols);
   for (let c = 0; c < (rows * cols); c++) {
@@ -14,7 +14,7 @@ function makeRows(rows, cols) {
   };
 };
 
-makeRows(10, 10);
+makeRows1(10, 10);
 
 function ordPair(id) {
   let num = Number(id.slice(5));

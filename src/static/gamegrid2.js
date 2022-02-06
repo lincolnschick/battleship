@@ -1,6 +1,6 @@
 const container2 = document.getElementById("container2");
 
-function makeRows(rows, cols) {
+function makeRows2(rows, cols) {
   container2.style.setProperty('--grid-rows', rows);
   container2.style.setProperty('--grid-cols', cols);
   for (let c = 0; c < (rows * cols); c++) {
@@ -14,4 +14,4 @@ function makeRows(rows, cols) {
   };
 };
 
-makeRows(10, 10);
+makeRows2(10, 10);
