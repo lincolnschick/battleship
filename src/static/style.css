@@ -55,5 +55,12 @@
 	padding: 2em;
 	border: 1px solid black;
 	text-align: center;
-	background-color: #1fa8d7;
+	background-color: #1fa9d7a9;
+}
+
+.grid-item-hovered-guess {
+	padding: 2em;
+	border: 1px solid black;
+	text-align: center;
+	background-color: #c22727b9;
 }
