@@ -12,7 +12,7 @@ class GameBoard {
         this.board = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
     }
 
-    //A method that simply fires at the given cell and adjusts state accordingly
+    //A method that simply fires at the given cell and adjusts state accordingly.
     firedAt( row, col ){
         if ( this.board[ row ][ col ]  == 1 ){
             this.board[ row ][ col ] = -2;
