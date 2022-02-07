@@ -55,6 +55,12 @@
 	background-color: white;
 }
 
+.grid-item-ship {
+	padding: 2em;
+	text-align: center;
+	background-color: rgb(56, 54, 54);
+}
+
 .grid-item-shiptablemember {
 	display: grid;
 	grid-template-columns: repeat(var(--grid-cols), 1fr);

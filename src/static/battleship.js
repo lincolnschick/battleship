@@ -2,7 +2,7 @@ let numberOfShips = 0;
 let backEnd = new Battleship(0);
 let playerOnePlacement = false;
 let shipOrientation = "Horizontal";
-let shipSelected = 5; 
+let shipSelected = 0; 
 
 function moveToShipSelect() {
     document.getElementById("startmenu").style.visibility = "hidden";
