@@ -21,9 +21,10 @@ function makeRows1(rows, cols) {
 //Calls the makeRows1(rows,cols) func.
 makeRows1(10, 10);
 
-function ordPair(id) {
+//Keeping a function that gave cords just in case need to revert/use...
+/*function ordPair(id) {
   let num = Number(id.slice(5));
   let i = Math.floor(num / 10);
   let j = num % 10;
   return [i, j];
-}
+}*/
