@@ -1,7 +1,7 @@
 let numberOfShips = 0;
 let backEnd = new Battleship(0);
 let playerOnePlacement = false;
-let shipOrientation = "Hl";
+let shipOrientation = "Horizontal";
 let shipSelected = 5; 
 
 function moveToShipSelect() {
@@ -13,14 +13,20 @@ function moveToShipSelect() {
         shipSelectButtons[i].addEventListener('click', () => {
             numberOfShips = i+1;
             makeRowsST(numberOfShips);
+
+            //call to addEvent Listeners
+            //_________________________________
             hoverMult();
             placeAShip();
+            //_________________________________
+
             backEnd = new Battleship( numberOfShips );
             moveToPlayerOnePlacementPrep();
         });
     }
 }
 
+//Large hovering function------------------------------------------------------------------------------------------------
 function hoverMult(){
     for ( let i = 0 ; i < 10 ; i ++ ){
         for ( let j = 0 ; j < 10 ; j ++ ){
@@ -74,6 +80,7 @@ function hoverMult(){
     }
 }
 
+//Large placeship function------------------------------------------------------------------------------------------------
 function placeAShip(){
     for ( let i = 0 ; i < 10 ; i ++ ){
         for ( let j = 0 ; j < 10 ; j ++ ){
