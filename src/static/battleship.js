@@ -17,11 +17,9 @@ function moveToShipSelect() {
             moveToPlayerOnePlacementPrep();
         });
     }
-
 }
 
 function moveToPlayerOnePlacementPrep() {
-    playerOnePlacement = true; 
     document.getElementById("shipselect").style.visibility = "hidden";
     document.getElementById("p1shipprep").style.visibility = "visible";
 }

@@ -1,5 +1,8 @@
 const container1 = document.getElementById("container1");
 
+//Creates the elements that represent each cell in the playerOne Main board (ship board)
+//Does so by setting it to a style, then going through creating each individual cell
+//After which it adds some basic functionality (hovering over a grid). 
 function makeRows1(rows, cols) {
   container1.style.setProperty('--grid-rows', rows);
   container1.style.setProperty('--grid-cols', cols);
@@ -15,6 +18,7 @@ function makeRows1(rows, cols) {
   }
 };
 
+//Calls the makeRows1(rows,cols) func.
 makeRows1(10, 10);
 
 function ordPair(id) {
