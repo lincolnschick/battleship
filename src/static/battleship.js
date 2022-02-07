@@ -1,4 +1,8 @@
 let numberOfShips = 0;
+let backEnd = new Battleship(0);
+let playerOnePlacement = false;
+let shipOrientation = "Horizontal";
+let shipSelected = 5; 
 
 function moveToShipSelect() {
     document.getElementById("startmenu").style.visibility = "hidden";
@@ -9,7 +13,7 @@ function moveToShipSelect() {
         shipSelectButtons[i].addEventListener('click', () => {
             numberOfShips = i+1;
             makeRowsST(numberOfShips);
-            // fillShips(shipTableElements);
+            backEnd = new Battleship( numberOfShips );
             moveToPlayerOnePlacementPrep();
         });
     }
@@ -17,6 +21,7 @@ function moveToShipSelect() {
 }
 
 function moveToPlayerOnePlacementPrep() {
+    playerOnePlacement = true; 
     document.getElementById("shipselect").style.visibility = "hidden";
     document.getElementById("p1shipprep").style.visibility = "visible";
 }
