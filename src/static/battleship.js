@@ -81,6 +81,7 @@ function hoverMult(){
 }
 
 //Large placeship function------------------------------------------------------------------------------------------------
+//Currently no removes for the hovering mult function because they are all local.
 function placeAShip(){
     for ( let i = 0 ; i < 10 ; i ++ ){
         for ( let j = 0 ; j < 10 ; j ++ ){
