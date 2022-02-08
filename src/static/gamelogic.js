@@ -66,7 +66,35 @@ class GameBoard {
      */
     isValid(numShips) {
         const validNumOnes = numShips * (numShips + 1) / 2;
-
+        let count = this.board.flat().reduce((val, count) => val + count);
+        if (count !== validNumOnes) {
+            return false;
+        }
+        let boardCopy = this.board.map(row => {
+            return row.map(val => val);
+        });
+        //Check that the correct number of ships are present
+        //Need to cite this code in documentation
+        //https://javascript.plainenglish.io/javascript-algorithms-number-of-islands-leetcode-6eff200bdf1
+        let counter = 0;
+        const dfs = (i, j) => {
+            if (i >= 0 && j >= 0 && i < 10 && j < 10 && boardCopy[i][j] === 1) {
+                boardCopy[i][j] = 0;
+                dfs(i + 1, j); // top
+                dfs(i, j + 1); // right
+                dfs(i - 1, j); // bottom
+                dfs(i, j - 1); // left
+            }
+        };
+        for (let i = 0; i < 10; i++) {
+            for (let j = 0; j < 10; j++) {
+                if (boardCopy[i][j] === 1) {
+                    counter += 1;
+                    dfs(i, j);
+                }
+            }
+        }
+        return counter == numShips;
     }
     /** 
      * Needed to implement the player method in the Battleship class

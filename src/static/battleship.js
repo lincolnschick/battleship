@@ -1,6 +1,6 @@
 
 let numberOfShips = 0;
-//This is global and can be accessed from anywhere in any JS file. Holds all the game info
+//Global Battleship object
 var game = null;
 
 function moveToShipSelect() {
@@ -41,8 +41,10 @@ function moveToPlayerOnePlacement() {
                     game.placeShip(1, i, j);
                 }
                 if (game.isValid(1)) {
-                    //Show continue button
-
+                    //Show continue
+                    console.log("Valid");
+                } else {
+                    //Hide continue
                 }
             });
         }
