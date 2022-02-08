@@ -5,10 +5,6 @@ function makeRows1(rows, cols) {
   container1.style.setProperty('--grid-cols', cols);
   for (let c = 0; c < (rows * cols); c++) {
     let cell = document.createElement("div");
-
-    cell.addEventListener("mouseover", function() {document.getElementById('cell' + "1" + c).className += ('-hovered');});
-    cell.addEventListener("mouseout", function() {document.getElementById('cell' + "1" + c).className = ('grid-item');});
-    
     container1.appendChild(cell).className = "grid-item";
     container1.appendChild(cell).id = 'cell' + "1" + c;
   };
@@ -21,4 +17,8 @@ function ordPair(id) {
   let i = Math.floor(num / 10);
   let j = num % 10;
   return [i, j];
+}
+function getId(board, i, j) {
+  let num = i * 10 + j
+  return `cell${board}${num}`;
 }

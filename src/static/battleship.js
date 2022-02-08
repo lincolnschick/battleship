@@ -24,6 +24,18 @@ function moveToPlayerOnePlacementPrep() {
 function moveToPlayerOnePlacement() {
     document.getElementById("p1shipprep").style.visibility = "hidden";
     document.getElementById("p1shipplacement").style.visibility = "visible";
-
     document.getElementById("numberofshipsselected").innerText = numberOfShips;
+    for (let i = 0; i < 10; i++) {
+        for (let j = 0; j < 10; j++) {
+            let cell = document.getElementById(getId(1, i, j));
+            console.log(getId(1, i, j))
+            cell.addEventListener("click", () => {
+                if (cell.className === "grid-item-ship") {
+                    cell.className = "grid-item";
+                } else {
+                    cell.className = "grid-item-ship";
+                }
+            });
+        }
+    }
 }
