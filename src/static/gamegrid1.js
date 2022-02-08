@@ -23,3 +23,7 @@ function getId(board, i, j) {
   let num = i * 10 + j
   return `cell${board}${num}`;
 }
+
+function getBoardFromId(id) {
+  return Number(id.slice(4, 5));
+}

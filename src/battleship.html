@@ -26,25 +26,29 @@
                 </div>
             </div>
         </div>
-        <div id="p1shipprep" class="gamepage" style="visibility:hidden; margin-top:-100px;">
+        <div id="shipprep" class="gamepage" style="visibility:hidden; margin-top:-100px;">
             <div class="box-container">
                 <div class="box">
-                    <h1>Player 1</h1>
+                    <h1 id="prepplayer">Player 1</h1>
                 </div>
                 <div class="box" style="margin-top: 30px">
                     <h1>Ready to start ship placement?</h1>
                 </div>
                 <div class="box">
-                    <button onclick="moveToPlayerOnePlacement()">GO</button>
+                    <button id="gobtn">GO</button>
+                    <button id="gobtn2" style="display: none;">GO</button>
                 </div>
             </div>
         </div>
-        <div id="p1shipplacement" class="gamepage" style="visibility:hidden; margin-top:-200px;">
+        <div id="shipplacement" class="gamepage" style="visibility:hidden; margin-top:-200px;">
             <div class="box-container">
                 <div class="box">
-                    <h3 style="margin-right:10px;">Number of ships selected:</h3><h3 id="numberofshipsselected">0</h3>
+                    <h2>Player 1's Board</h2>
+                    <h2 style="margin-right:10px;">Number of ships selected:</h2><h2 id="numberofshipsselected">0</h2>
+                    <h2>Player 2's Board</h2>
                 </div>
                 <div class="box">
+                    
                     <div id="container1">
                         
                     </div>
@@ -58,6 +62,13 @@
 
                     </div>
                 </div> 
+            </div>
+        </div>
+        <div id="placeships" style="visibility:hidden;">
+            <div class="box-container">
+                <div class="box">
+                    <button id="placeshipsbtn">Place Ships</button>
+                </div>
             </div>
         </div>
     </body>
