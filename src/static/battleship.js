@@ -1,4 +1,7 @@
+
 let numberOfShips = 0;
+//This is global and can be accessed from anywhere in any JS file. Holds all the game info
+var game = null;
 
 function moveToShipSelect() {
     document.getElementById("startmenu").style.visibility = "hidden";
@@ -22,20 +25,27 @@ function moveToPlayerOnePlacementPrep() {
 }
 
 function moveToPlayerOnePlacement() {
+    game = new Battleship(numberOfShips);
     document.getElementById("p1shipprep").style.visibility = "hidden";
     document.getElementById("p1shipplacement").style.visibility = "visible";
     document.getElementById("numberofshipsselected").innerText = numberOfShips;
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
             let cell = document.getElementById(getId(1, i, j));
-            console.log(getId(1, i, j))
             cell.addEventListener("click", () => {
                 if (cell.className === "grid-item-ship") {
                     cell.className = "grid-item";
-                } else {
+                    game.placeShip(1, i, j);
+                } else if (game.isValidPlacement(1, i, j)){
                     cell.className = "grid-item-ship";
+                    game.placeShip(1, i, j);
+                }
+                if (game.isValid(1)) {
+                    //Show continue button
+
                 }
             });
         }
     }
+
 }

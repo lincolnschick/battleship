@@ -18,6 +18,7 @@ function ordPair(id) {
   let j = num % 10;
   return [i, j];
 }
+
 function getId(board, i, j) {
   let num = i * 10 + j
   return `cell${board}${num}`;

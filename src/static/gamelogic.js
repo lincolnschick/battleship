@@ -25,9 +25,32 @@ class GameBoard {
     placeShip( row, col ){
         if ( this.board[ row ][ col ] == 0 ){
             this.board[ row ][ col ] = 1;
+        } else {
+            this.board[row][col] = 0;
         }
     }
-
+    isValidPlacement(row, col, numShips) {
+        //Check diagonals
+        if (row + 1 < 10 && col + 1 < 10 && this.board[row + 1][col + 1] == 1) {
+            return false;
+        }
+        if (row - 1 >= 0 && col - 1 >= 0 && this.board[row - 1][col - 1] == 1) {
+            return false;
+        }
+        if (row - 1 >= 0 && col + 1 < 10 && this.board[row - 1][col + 1] == 1) {
+            return false;
+        }
+        if (row + 1 < 10 && col - 1 >= 0 && this.board[row + 1][col - 1] == 1) {
+            return false;
+        }
+        //Check for filled squares in more than one direction
+        if ((row + 1 < 10 && this.board[row + 1][col] == 1 || row - 1 >= 0 && this.board[row - 1][col] == 1)) {
+            if (col + 1 < 10 && this.board[row][col + 1] == 1 || col - 1 >= 0 && this.board[row][col - 1] == 1) {
+                return false;
+            }
+        }
+        return true;
+    }
     //Resets all the cells to 0
     resetBoard(){
         for ( let i = 0 ; i < this.rows ; i ++ ){
@@ -42,6 +65,7 @@ class GameBoard {
      * @return {boolean} whether board is valid for game to start
      */
     isValid(numShips) {
+        const validNumOnes = numShips * (numShips + 1) / 2;
 
     }
     /** 
@@ -93,7 +117,16 @@ class Battleship {
      */
     isValid(board) {
         //Calls appropriate isValid method for given board.
-        return board == 1 ? this.board1.isValid() : this.board2.isValid();
+        return board == 1 ? this.board1.isValid(this.numShips) : this.board2.isValid(this.numShips);
+    }
+    /** 
+     * Calls appropriate board's isValidPlacement method
+     * @param {number} board - 1 or 2
+     * @param {number} row
+     * @param {number} col - column 
+     */
+    isValidPlacement(board, i, j) {
+        return board == 1 ? this.board1.isValidPlacement(i, j, this.numShips) : this.board2.isValidPlacement(i, j, this.numShips);
     }
     /** 
      * @return {number} whose turn it is (player 1 or 2)
@@ -132,6 +165,8 @@ class Battleship {
     /** 
      * Calls appropriate board's placeShip method
      * @param {number} board - 1 or 2
+     * @param {number} row
+     * @param {number} col - column 
      */
     placeShip(board, row, col) {
         //Calls placeShip for appropriate player
