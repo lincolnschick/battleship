@@ -5,17 +5,66 @@
 //Each cell in the board has multiple states...
 //-2 = ship was hit        -1 = empty space was hit
 // 0 = empty space          1 = ship in spot
+//-3 = ship is sunk
 class GameBoard {
     constructor(){
         this.rows = 10;
         this.cols = 10;
         this.board = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
     }
-
+    /** 
+     * @private
+     * @param {number} i - row
+     * @param {number} j - column 
+     * @return {[[number, number]]} list of i, j coordinates of ship the row, col is included in
+     */
+    _getShip(i, j) {
+        let shipCoords = [];
+        shipCoords.push([i, j]);
+        let k = 1;
+        while (i + k < 10 && [-2, 1].includes(board1[i + k][j])) {
+            shipCoords.push([i + k, j]);
+            k++;
+        }
+        k = 1;
+        while (i - k >= 0 && [-2, 1].includes(board1[i - k][j])) {
+            shipCoords.push([i - k, j]);
+            k++;
+        }
+        k = 1;
+        while (j + k < 10 && [-2, 1].includes(board1[i][j + k])) {
+            shipCoords.push([i, j + k]);
+            k++;
+        }
+        k = 1;
+        while (j - k >= 0 && [-2, 1].includes(board1[i][j - k])) {
+            shipCoords.push([i, j - k]);
+            k++;
+        }
+        return shipCoords;
+    }
+    _isShipSunk(row, col) {
+        const shipCoords = this._getShip(row, col);
+        for (let coords of shipCoords) {
+            //If one square is not hit, return false
+            if (this.board[coords[0]][coords[1]] == 1) {
+                return false;
+            }
+        }
+        //If no squares are 1, they are all -2s and ship is sunk
+        //Update cells to sunk (-3)
+        for (let coords of shipCoords) {
+            this.board[coords[0]][coords[1]] = -3;
+        }
+        return true;
+    }
     //A method that simply fires at the given cell and adjusts state accordingly.
     firedAt( row, col ){
         if ( this.board[ row ][ col ]  == 1 ){
-            this.board[ row ][ col ] = -2;
+            //If ship becomes sunk, this method with update all ship cells
+            if (!this._isShipSunk()) {
+                this.board[ row ][ col ] = -2;
+            }
         } else {
             this.board[ row ][ col ] = -1;
         }
