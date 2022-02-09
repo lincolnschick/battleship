@@ -1,25 +1,26 @@
-
+/*----------------------------------------------------------------------------------------------------------------*/
+//Globle variables that are used throughout the game
 let numberOfShips = 0;
-//Global Battleship object
 var game = null;
 let numRuns = 0;
 
+/*----------------------------------------------------------------------------------------------------------------*/
+//First function that is called, simply is called when start is pressed
 function moveToShipSelect() {
-    document.getElementById("startmenu").style.visibility = "hidden";
-    document.getElementById("shipselect").style.visibility = "visible";
-
+    document.getElementById("startmenu").style.visibility = "hidden";           //Hides and reveals the appropriate
+    document.getElementById("shipselect").style.visibility = "visible";         //Ids
     const shipSelectButtons = document.querySelectorAll(".shipselectbutton");
     for(let i = 0; i < shipSelectButtons.length; i++) {
-        shipSelectButtons[i].addEventListener('click', () => {
-            numberOfShips = i+1;
+        shipSelectButtons[i].addEventListener('click', () => {                  //Creates buttons that alter the 
+            numberOfShips = i+1;                                                //numberOfShips
             makeRowsST(numberOfShips);
-            // fillShips(shipTableElements);
-            moveToPlayerOnePlacementPrep();
+            moveToPlayerOnePlacementPrep();                                     //Moves to the next step of game
         });
     }
-
 }
 
+/*----------------------------------------------------------------------------------------------------------------*/
+//Here buttons are made that call functions that determine player placement
 function moveToPlayerOnePlacementPrep() {
     document.getElementById("shipselect").style.visibility = "hidden";
     document.getElementById("shipprep").style.visibility = "visible";
@@ -27,6 +28,13 @@ function moveToPlayerOnePlacementPrep() {
     document.getElementById("placeshipsbtn").addEventListener("click", moveToPlayerTwoPlacementPrep);
 }
 
+//Goes to player one placement after creating the battleship class
+function moveToPlayerOnePlacement() {
+    game = new Battleship(numberOfShips);
+    moveToPlayerPlacement(1);
+}
+/*----------------------------------------------------------------------------------------------------------------*/
+//Creates buttons for player two
 function moveToPlayerTwoPlacementPrep() {
     document.getElementById("shipplacement").style.visibility = "hidden";
     document.getElementById("placeships").style.visibility = "hidden";
@@ -34,16 +42,10 @@ function moveToPlayerTwoPlacementPrep() {
     document.getElementById("gobtn").style.display = "none";
     document.getElementById("gobtn2").style.display = "inline-block";
     document.getElementById("gobtn2").addEventListener("click", moveToPlayerTwoPlacement)
-
     document.getElementById("prepplayer").innerHTML = "Player 2";
 }
 
-function moveToPlayerOnePlacement() {
-    console.log("here")
-    game = new Battleship(numberOfShips);
-    moveToPlayerPlacement(1);
-}
-
+//Goes to player two placement after disabling board of player one
 function moveToPlayerTwoPlacement() {
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
@@ -57,6 +59,7 @@ function moveToPlayerTwoPlacement() {
     placeShipBtn.addEventListener("click", gameRunner);
     moveToPlayerPlacement(2);
 }
+/*----------------------------------------------------------------------------------------------------------------*/
 
 /** 
  * @param {number} board - which board is being set up
@@ -137,3 +140,5 @@ function gameRunner() {
     }
     loadBoards(1);
 }
+
+/*----------------------------------------------------------------------------------------------------------------*/
