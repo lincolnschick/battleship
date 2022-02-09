@@ -29,6 +29,7 @@ class GameBoard {
             this.board[row][col] = 0;
         }
     }
+
     isValidPlacement(row, col, numShips) {
         //Check diagonals
         if (row + 1 < 10 && col + 1 < 10 && this.board[row + 1][col + 1] == 1) {
@@ -51,6 +52,7 @@ class GameBoard {
         }
         return true;
     }
+
     //Resets all the cells to 0
     resetBoard(){
         for ( let i = 0 ; i < this.rows ; i ++ ){
@@ -59,6 +61,7 @@ class GameBoard {
             }
         }
     }
+
     /** 
      * Will be called by Battleship class to inform front end
      * @param {number} numShips - number of ships for game
@@ -96,6 +99,7 @@ class GameBoard {
         }
         return counter == numShips;
     }
+
     /** 
      * Needed to implement the player method in the Battleship class
      * @return {number} number of shots fired on board (-1s and -2s)
@@ -111,6 +115,7 @@ class GameBoard {
             }
         } return ( count ); 
     }
+
     /** 
      * Needed for isGameOver in Battleship class
      * @return {boolean} whether all ships have been sunk on this board
@@ -128,8 +133,8 @@ class GameBoard {
 
 }
 /*----------------------------------------------------------------------------------------------------------------*/
-
 //This is the only class the front end will interact with
+
 class Battleship {
     /** 
      * @constructor
@@ -139,6 +144,7 @@ class Battleship {
         this.board1 = new GameBoard();
         this.board2 = new GameBoard();
     }
+
     /** 
      * @param {number} board - 1 or 2
      * @return {boolean} whether given board is valid for game to start
@@ -147,6 +153,7 @@ class Battleship {
         //Calls appropriate isValid method for given board.
         return board == 1 ? this.board1.isValid(this.numShips) : this.board2.isValid(this.numShips);
     }
+
     /** 
      * Calls appropriate board's isValidPlacement method
      * @param {number} board - 1 or 2
@@ -156,6 +163,7 @@ class Battleship {
     isValidPlacement(board, i, j) {
         return board == 1 ? this.board1.isValidPlacement(i, j, this.numShips) : this.board2.isValidPlacement(i, j, this.numShips);
     }
+
     /** 
      * @return {number} whose turn it is (player 1 or 2)
     */
@@ -163,6 +171,7 @@ class Battleship {
         //Returns 1 if board1 has fewer shots on it than board2, otherwise it returns 2.
         return this.board1.shots() < this.board2.shots() ? 1 : 2;
     }
+
     /** 
      * Updates appropriate board
      * @param {number} board - 1 or 2
@@ -173,6 +182,7 @@ class Battleship {
         //Calls firedAt for appropriate player
         board == 1 ? this.board1.firedAt(row, col) : this.board2.firedAt(row, col);
     }
+
     /** 
      * @return {boolean} whether game is over, calls GameBoard method
      */
@@ -180,6 +190,7 @@ class Battleship {
         //determines if a player has lost
         return(this.board1.isSunk() || this.board2.isSunk());
     }
+
     /** 
      * @return {number} who won, player 1 or 2
      */
@@ -190,6 +201,7 @@ class Battleship {
             return this.board1.isSunk() ? 2 : 1;
         }
     }
+
     /** 
      * Calls appropriate board's placeShip method
      * @param {number} board - 1 or 2
@@ -200,6 +212,7 @@ class Battleship {
         //Calls placeShip for appropriate player
         board == 1 ? this.board1.placeShip(row, col) : this.board2.placeShip(row, col);
     }
+    
     /** 
      * @param {number} board - 1 or 2, which board should be returned
      * @param {boolean} [hidden=false] - whether given board should be returned with undiscovered ships hidden
@@ -220,3 +233,5 @@ class Battleship {
         }
     }
 }
+
+/*----------------------------------------------------------------------------------------------------------------*/
