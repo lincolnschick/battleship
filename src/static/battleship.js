@@ -86,29 +86,6 @@ function placeAShip(){
     for ( let i = 0 ; i < 10 ; i ++ ){
         for ( let j = 0 ; j < 10 ; j ++ ){
             document.getElementById("P1main" + i + j ).addEventListener( "click", function (){
-                document.getElementById("P1main" + i + j ).addEventListener( "mouseout", function (){
-                    if ( shipOrientation == "Horizontal" ){
-                        for ( let k = 0 ; k < shipSelected ; k ++ ){
-                            if ( j + k < 10 ){
-                                document.getElementById("P1main" + i + ( j + k ) ).className = 'grid-item-ship';
-                            } else {
-                                for ( let l = shipSelected - k ; l > 0 ; l -- ){
-                                    document.getElementById("P1main" + i + ( j - l ) ).className = 'grid-item-ship';
-                                }
-                            }
-                        }
-                    } else {
-                        for ( let k = 0 ; k < shipSelected ; k ++ ){
-                            if ( i + k < 10 ){
-                                document.getElementById("P1main" + ( i + k ) + j ).className = 'grid-item-ship';
-                            } else {
-                                for ( let l = shipSelected - k ; l > 0 ; l -- ){
-                                    document.getElementById("P1main" + ( i - l ) + j ).className = 'grid-item-ship';
-                                }
-                            }
-                        }
-                    }
-                });
                 if ( shipOrientation == "Horizontal" ){
                     for ( let k = 0 ; k < shipSelected ; k ++ ){
                         if ( j + k < 10 ){
