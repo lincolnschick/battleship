@@ -43,6 +43,12 @@ class GameBoard {
         }
         return shipCoords;
     }
+    /** 
+     * @private
+     * @param {number} row
+     * @param {number} col
+     * @return {boolean} whether ship is sunk
+     */
     _isShipSunk(row, col) {
         const shipCoords = this._getShip(row, col);
         for (let coords of shipCoords) {
