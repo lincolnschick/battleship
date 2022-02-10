@@ -22,22 +22,22 @@ class GameBoard {
         let shipCoords = [];
         shipCoords.push([i, j]);
         let k = 1;
-        while (i + k < 10 && [-2, 1].includes(board1[i + k][j])) {
+        while (i + k < 10 && [-2, 1].includes(this.board[i + k][j])) {
             shipCoords.push([i + k, j]);
             k++;
         }
         k = 1;
-        while (i - k >= 0 && [-2, 1].includes(board1[i - k][j])) {
+        while (i - k >= 0 && [-2, 1].includes(this.board[i - k][j])) {
             shipCoords.push([i - k, j]);
             k++;
         }
         k = 1;
-        while (j + k < 10 && [-2, 1].includes(board1[i][j + k])) {
+        while (j + k < 10 && [-2, 1].includes(this.board[i][j + k])) {
             shipCoords.push([i, j + k]);
             k++;
         }
         k = 1;
-        while (j - k >= 0 && [-2, 1].includes(board1[i][j - k])) {
+        while (j - k >= 0 && [-2, 1].includes(this.board[i][j - k])) {
             shipCoords.push([i, j - k]);
             k++;
         }
