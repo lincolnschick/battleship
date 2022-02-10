@@ -257,6 +257,19 @@ class Battleship {
         }
     }
 
+    //This function is purely for testing purposes to see if the other functions run correctly.
+    printBoard( board ){
+        for ( let i = 0 ; i < 10 ; i++ ){
+            for ( let j = 0 ; j < 10 ; j ++ ){
+                if ( board == 1 ){
+                    console.log( this.board1.board[i][j]);
+                } else {
+                    console.log( this.board2.board[i][j]);
+                }
+            }
+        }
+    }
+
     /** 
      * Calls appropriate board's placeShip method
      * @param {number} board - 1 or 2
