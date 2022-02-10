@@ -67,10 +67,9 @@ class GameBoard {
     //A method that simply fires at the given cell and adjusts state accordingly.
     firedAt( row, col ){
         if ( this.board[ row ][ col ]  == 1 ){
-            //If ship becomes sunk, this method with update all ship cells
-            if (!this._isShipSunk(row, col)) {
-                this.board[ row ][ col ] = -2;
-            }
+            this.board[ row ][ col ] = -2;
+            //If ship becomes sunk, this method will update all ship cells
+            this._isShipSunk(row, col);
         } else {
             this.board[ row ][ col ] = -1;
         }
