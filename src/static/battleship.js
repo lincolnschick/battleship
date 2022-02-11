@@ -131,7 +131,7 @@ function opponentCellClass(value) {
 }
 
 function gameRunner() {
-    document.getElementById("placeships").style.visibility = "hidden";
+    document.getElementById("placeships").style.display = "none";
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
             let cell = document.getElementById(getId(2, i, j));
