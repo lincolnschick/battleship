@@ -3,6 +3,7 @@
 let numberOfShips = 0;
 var game = null;
 let numRuns = 0;
+let turnTracker = null;
 
 /*----------------------------------------------------------------------------------------------------------------*/
 //First function that is called, simply is called when start is pressed
@@ -113,23 +114,28 @@ function loadBoards(player) {
 }
 
 function playerCellClass(value) {
-    if (value == 1) {
+    if (value == -3) {
+        return "grid-item-sunk";
+    } else if (value == -2) {
+        return "grid-item-hit";
+    } else if (value == 1) {
         return "grid-item-ship";
     } else if (value == 0) {
         return "grid-item";
-    } else if (value == -2) {
-        return "grid-item-ship-hit";
-    } else if (value == -1) {
-        return "grid-item-ship-empty";
+    } else {
+        return "grid-item-miss";
     }
-
 }
 
 function opponentCellClass(value) {
-    if (value == -2 || value == -3) {
+    if (value == -2) {
         return "grid-item-hit";
+    } else if (value == -3) {
+        return "grid-item-sunk";
     } else if (value == 0) {
         return "grid-item-opponent";
+    } else if (value == -3) {
+        return "grid-item-sunk";
     } else {
         return "grid-item-miss";
     }
@@ -147,12 +153,21 @@ function gameRunner() {
             cell2.addEventListener("click", fire);
         }
     }
-    playerFirePrep(1);
+    turnTracker = new Turn(2);
+    playerFirePrep();
 }
 
-function nextTurn() {
-    let player = numRuns % 2 == 0 ? 1 : 2;
-    playerFirePrep(player);
+class Turn {
+    constructor(start) {
+        this.turn = start;
+    }
+    getTurn() {
+        return this.turn;
+    }
+    nextTurn() {
+        this.turn = this.turn == 1 ? 2 : 1;
+        return this.turn;
+    }
 }
 
 let fired = false;
@@ -164,26 +179,37 @@ function fire() {
         game.firedAt(opponent,x,y);
         fired = true;
         numRuns++;
-        this.className = opponentCellClass(game.getBoard(opponent)[x][y]);
+        loadBoards(turnTracker.getTurn());
     }
     this.removeEventListener("click", fire);
     document.getElementById("fireAt").style.display = "block";
-    document.getElementById("fireAtShips").addEventListener("click", nextTurn);
+    document.getElementById("fireAtShips").addEventListener("click", playerFirePrep);
 }
 
-function playerFirePrep(player) {
-    document.getElementById("shipplacement").style.display = "none";
-    document.getElementById("shipprep").style.display = "block";
-    document.getElementById("gobtn").style.display = "inline-block";
-    document.getElementById("gobtn").removeEventListener("click", moveToPlayerOnePlacement);
-    document.getElementById("gobtn").addEventListener("click", () => playerFire(player));
-    document.getElementById("promptforward").innerHTML = "Ready to continue?";
-    document.getElementById("prepplayer").innerHTML = `Player ${player}`;
-    document.getElementById("fireAt").style.display = "none";
-    fired = false;
+function playerFirePrep() {
+    if (game.isGameOver()) {
+        let winner = turnTracker.getTurn();
+        document.getElementById("shipplacement").style.display = "none";
+        document.getElementById("fireAtShips").style.display = "none";
+        document.getElementById("winningpage").style.display = "block";
+        document.getElementById("whowon").innerHTML = `Player ${winner} won!`;
+        console.log("here")
+    } else {
+        let player = turnTracker.nextTurn();
+        document.getElementById("shipplacement").style.display = "none";
+        document.getElementById("shipprep").style.display = "block";
+        document.getElementById("gobtn").style.display = "inline-block";
+        document.getElementById("gobtn").removeEventListener("click", moveToPlayerOnePlacement);
+        document.getElementById("gobtn").addEventListener("click", playerFire);
+        document.getElementById("promptforward").innerHTML = "Ready to continue?";
+        document.getElementById("prepplayer").innerHTML = `Player ${player}`;
+        document.getElementById("fireAt").style.display = "none";
+        fired = false;
+    }
 }
 
-function playerFire(player) {
+function playerFire() {
+    let player = turnTracker.getTurn();
     let opponent = player == 1 ? 2 : 1;
     document.getElementById("shipplacement").style.display = "block";
     document.getElementById("shipprep").style.display = "none";

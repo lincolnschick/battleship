@@ -70,20 +70,10 @@
 	text-align: center;
 	background-color: rgb(56, 54, 54);
 }
-.grid-item-ship-hit {
-	padding: 1.5em;
-	text-align: center;
-	background-color: rgb(13, 17, 236);
-}
-.grid-item-ship-empty {
-	padding: 1.5em;
-	text-align: center;
-	background-color: rgb(236, 165, 13);
-}
 .grid-item-hit {
 	padding: 1.5em;
 	text-align: center;
-	background-color: rgb(4, 236, 55);
+	background-color: rgb(190, 0, 0);
 }
 
 .grid-item-opponent {
@@ -93,11 +83,17 @@
 	background-color: white;
 }
 
+.grid-item-sunk {
+	padding: 1.5em;
+	text-align: center;
+	background-color: rgb(0, 0, 0);
+}
+
 .grid-item-miss {
 	padding: 1.5em;
 	border: 1px solid black;
 	text-align: center;
-	background-color: rgb(181, 218, 49);
+	background-color: rgb(121, 121, 121);
 }
 
 .grid-item-opponent:hover {
