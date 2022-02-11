@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-        <div id="shipselect" class="gamepage" style="display:none;">
+        <div id="shipselect" class="gamepage" style="display: none;">
             <div class="box-container">
                 <div class="box">
                     <button class="shipselectbutton">1 SHIP</button>
@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <div id="shipprep" class="gamepage" style="display:none;">
+        <div id="shipprep" class="gamepage" style="display: none;">
             <div class="box-container">
                 <div class="box">
                     <h1 id="prepplayer">Player 1</h1>
@@ -40,7 +40,17 @@
                 </div>
             </div>
         </div>
-        <div id="shipplacement" class="gamepage" style="display:none;">
+        <div id="continueprompt" class="gamepage" style="display: none;">
+            <div class="box-container">
+                <div class="box">
+                    <h1 id="playerturn">Player 1's Turn</h1>
+                </div>
+                <div class="box">
+                    <button id="continuebtn">Continue</button>
+                </div>
+            </div>
+        </div>
+        <div id="shipplacement" class="gamepage" style="display: none;">
             <div class="box-container">
                 <div class="box">
                     <h2 style="margin-right:10px;">Number of ships selected:</h2><h2 id="numberofshipsselected">0</h2>
@@ -55,24 +65,34 @@
                         
                     </div>
                 </div>
-                <div class="box" style="margin-top: 40px;">
+                <div class="box" style="margin-top: 40px; display: none;">
                     <div id="containerS">
 
                     </div>
                 </div> 
             </div>
         </div>
-        <div id="placeships" style="display:none;">
+        <div id="placeships" style="display: none;">
             <div class="box-container">
                 <div class="box">
                     <button id="placeshipsbtn">Place Ships</button>
                 </div>
             </div>
         </div>
-        <div id="fireAt" style ="display: none;">
+        <div id="nexturn" style="display: none;">
             <div class="box-container">
                 <div class="box">
-                    <button id="fireAtShips">Fire</button>
+                    <button id="placeshipsbtn" onclick="switchTurns()">Next Turn</button>
+                </div>
+            </div>
+        </div>
+        <div id="winningpage" class="gamepage" style="display: none;">
+            <div class="box-container">
+                <div class="box">
+                    <h1 style="text-align: center;" id="whowon">You Won!</h1>
+                </div>
+                <div class="box">
+                    <button onclick="location.reload()">Play Again</button>
                 </div>
             </div>
         </div>
