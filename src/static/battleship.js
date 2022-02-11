@@ -7,8 +7,8 @@ let numRuns = 0;
 /*----------------------------------------------------------------------------------------------------------------*/
 //First function that is called, simply is called when start is pressed
 function moveToShipSelect() {
-    document.getElementById("startmenu").style.visibility = "hidden";           //Hides and reveals the appropriate
-    document.getElementById("shipselect").style.visibility = "visible";         //Ids
+    document.getElementById("startmenu").style.display = "none";           //Hides and reveals the appropriate
+    document.getElementById("shipselect").style.display = "block";         //Ids
     const shipSelectButtons = document.querySelectorAll(".shipselectbutton");
     for(let i = 0; i < shipSelectButtons.length; i++) {
         shipSelectButtons[i].addEventListener('click', () => {                  //Creates buttons that alter the 
@@ -22,8 +22,8 @@ function moveToShipSelect() {
 /*----------------------------------------------------------------------------------------------------------------*/
 //Here buttons are made that call functions that determine player placement
 function moveToPlayerOnePlacementPrep() {
-    document.getElementById("shipselect").style.visibility = "hidden";
-    document.getElementById("shipprep").style.visibility = "visible";
+    document.getElementById("shipselect").style.display = "none";
+    document.getElementById("shipprep").style.display = "block";
     document.getElementById("gobtn").addEventListener("click", moveToPlayerOnePlacement);
     document.getElementById("placeshipsbtn").addEventListener("click", moveToPlayerTwoPlacementPrep);
 }
@@ -36,9 +36,9 @@ function moveToPlayerOnePlacement() {
 /*----------------------------------------------------------------------------------------------------------------*/
 //Creates buttons for player two
 function moveToPlayerTwoPlacementPrep() {
-    document.getElementById("shipplacement").style.visibility = "hidden";
-    document.getElementById("placeships").style.visibility = "hidden";
-    document.getElementById("shipprep").style.visibility = "visible";
+    document.getElementById("shipplacement").style.display = "none";
+    document.getElementById("placeships").style.display = "none";
+    document.getElementById("shipprep").style.display = "block";
     document.getElementById("gobtn").style.display = "none";
     document.getElementById("gobtn2").style.display = "inline-block";
     document.getElementById("gobtn2").addEventListener("click", moveToPlayerTwoPlacement)
@@ -65,8 +65,8 @@ function moveToPlayerTwoPlacement() {
  * @param {number} board - which board is being set up
  */
 function moveToPlayerPlacement(board) {
-    document.getElementById("shipprep").style.visibility = "hidden";
-    document.getElementById("shipplacement").style.visibility = "visible";
+    document.getElementById("shipprep").style.display = "none";
+    document.getElementById("shipplacement").style.display = "block";
     document.getElementById("numberofshipsselected").innerText = numberOfShips;
     loadBoards(board);
     for (let i = 0; i < 10; i++) {
@@ -90,10 +90,10 @@ function editShips() {
     }
     if (game.isValid(currBoard)) {
         //Show placeships
-        document.getElementById("placeships").style.visibility = "visible";
+        document.getElementById("placeships").style.display = "block";
     } else {
         //Hide placeships
-        document.getElementById("placeships").style.visibility = "hidden";
+        document.getElementById("placeships").style.display = "none";
     }
 }
 
