@@ -120,7 +120,7 @@ function playerCellClass(value) {
     } else if (value == -2) {
         return "grid-item-ship-hit";
     } else if (value == -1) {
-        return "grid-item-empty";
+        return "grid-item-ship-empty";
     }
 
 }
@@ -139,26 +139,15 @@ function gameRunner() {
     document.getElementById("placeships").style.display = "none";
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
-            let cell = document.getElementById(getId(2, i, j));
+            let cell2 = document.getElementById(getId(2, i, j));
+            let cell1 = document.getElementById(getId(1, i, j));
             //Disable editing of player 2's board
-            cell.removeEventListener("click", editShips);
+            cell2.removeEventListener("click", editShips);
+            cell1.addEventListener("click", fire);
+            cell2.addEventListener("click", fire);
         }
     }
-    loadBoards(1);
-    let opponentCell = document.querySelectorAll(".grid-item-opponent");
-    for (let i = 0; i < opponentCell.length; i++) {
-        opponentCell[i].addEventListener("click", fire);
-    }
-    loadBoards(2);
-    opponentCell = document.querySelectorAll(".grid-item-opponent");
-    for (let i = 0; i < opponentCell.length; i++) {
-        opponentCell[i].addEventListener("click", fire);
-    }
     playerFirePrep(1);
-    // let opponentCell = document.querySelectorAll(".grid-item-opponent");
-    // for (let i = 0; i < opponentCell.length; i++) {
-    //     opponentCell[i].addEventListener("click", fire);
-    // }
 }
 
 function nextTurn() {
@@ -173,45 +162,41 @@ function fire() {
     let opponent = getBoardFromId(this.id)
     if (!fired) {
         game.firedAt(opponent,x,y);
-        console.log(opponent);
-        console.log(game.printBoard(1));
-        console.log(game.printBoard(2));
         fired = true;
         numRuns++;
         this.className = opponentCellClass(game.getBoard(opponent)[x][y]);
     }
     this.removeEventListener("click", fire);
-    document.getElementById("fireAt").style.visibility = "visible";
+    document.getElementById("fireAt").style.display = "block";
     document.getElementById("fireAtShips").addEventListener("click", nextTurn);
 }
 
 function playerFirePrep(player) {
-    document.getElementById("shipplacement").style.visibility = "hidden";
-    document.getElementById("shipprep").style.visibility = "visible";
+    document.getElementById("shipplacement").style.display = "none";
+    document.getElementById("shipprep").style.display = "block";
     document.getElementById("gobtn").style.display = "inline-block";
     document.getElementById("gobtn").removeEventListener("click", moveToPlayerOnePlacement);
     document.getElementById("gobtn").addEventListener("click", () => playerFire(player));
     document.getElementById("promptforward").innerHTML = "Ready to continue?";
     document.getElementById("prepplayer").innerHTML = `Player ${player}`;
-    document.getElementById("fireAt").style.visibility = "hidden";
+    document.getElementById("fireAt").style.display = "none";
     fired = false;
 }
 
 function playerFire(player) {
     let opponent = player == 1 ? 2 : 1;
-    document.getElementById("shipplacement").style.visibility = "visible";
-    document.getElementById("shipprep").style.visibility = "hidden";
+    document.getElementById("shipplacement").style.display = "block";
+    document.getElementById("shipprep").style.display = "none";
     document.getElementById("gobtn").style.display = "none";
-    document.getElementById("fireAt").style.visibility = "hidden";
+    document.getElementById("fireAt").style.display = "none";
     loadBoards(player);
-    console.log(player);
-    let playerCells = document.querySelectorAll(".grid-item");
-    for (let i = 0; i < playerCells.length; i++) {
-        playerCells[i].style.pointerEvents = 'none';
-    }
-    let opponentCells = document.querySelectorAll(".grid-item-opponent");
-    for (let i = 0; i < opponentCells.length; i++) {
-        opponentCells[i].style.pointerEvents = 'auto';
+    for (let i = 0; i < 10; i++) {
+        for (let j = 0; j < 10; j++) {
+            let cellP = document.getElementById(getId(player, i, j));
+            let cellO = document.getElementById(getId(opponent, i, j));
+            cellP.style.pointerEvents = 'none';
+            cellO.style.pointerEvents = 'auto';
+        }
     }
 }
 
