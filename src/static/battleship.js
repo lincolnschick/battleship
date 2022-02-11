@@ -180,8 +180,8 @@ function fire() {
         fired = true;
         numRuns++;
         loadBoards(turnTracker.getTurn());
+        this.removeEventListener("click", fire);
     }
-    this.removeEventListener("click", fire);
     document.getElementById("fireAt").style.display = "block";
     document.getElementById("fireAtShips").addEventListener("click", playerFirePrep);
 }
