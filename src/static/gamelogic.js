@@ -22,22 +22,22 @@ class GameBoard {
         let shipCoords = [];
         shipCoords.push([i, j]);
         let k = 1;
-        while (i + k < 10 && [-2, 1].includes(board1[i + k][j])) {
+        while (i + k < 10 && [-2, 1].includes(this.board[i + k][j])) {
             shipCoords.push([i + k, j]);
             k++;
         }
         k = 1;
-        while (i - k >= 0 && [-2, 1].includes(board1[i - k][j])) {
+        while (i - k >= 0 && [-2, 1].includes(this.board[i - k][j])) {
             shipCoords.push([i - k, j]);
             k++;
         }
         k = 1;
-        while (j + k < 10 && [-2, 1].includes(board1[i][j + k])) {
+        while (j + k < 10 && [-2, 1].includes(this.board[i][j + k])) {
             shipCoords.push([i, j + k]);
             k++;
         }
         k = 1;
-        while (j - k >= 0 && [-2, 1].includes(board1[i][j - k])) {
+        while (j - k >= 0 && [-2, 1].includes(this.board[i][j - k])) {
             shipCoords.push([i, j - k]);
             k++;
         }
@@ -67,10 +67,9 @@ class GameBoard {
     //A method that simply fires at the given cell and adjusts state accordingly.
     firedAt( row, col ){
         if ( this.board[ row ][ col ]  == 1 ){
-            //If ship becomes sunk, this method with update all ship cells
-            if (!this._isShipSunk()) {
-                this.board[ row ][ col ] = -2;
-            }
+            this.board[ row ][ col ] = -2;
+            //If ship becomes sunk, this method will update all ship cells
+            this._isShipSunk(row, col);
         } else {
             this.board[ row ][ col ] = -1;
         }
@@ -254,6 +253,19 @@ class Battleship {
         if (this.isGameOver()) {
             //return player 2 win if all of player 1's ships are sunk and vice versa
             return this.board1.isSunk() ? 2 : 1;
+        }
+    }
+
+    //This function is purely for testing purposes to see if the other functions run correctly.
+    printBoard( board ){
+        for ( let i = 0 ; i < 10 ; i++ ){
+            for ( let j = 0 ; j < 10 ; j ++ ){
+                if ( board == 1 ){
+                    console.log( this.board1.board[i][j]);
+                } else {
+                    console.log( this.board2.board[i][j]);
+                }
+            }
         }
     }
 
