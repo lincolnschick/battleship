@@ -47,6 +47,7 @@ function moveToPlayerTwoPlacementPrep() {
 
 //Goes to player two placement after disabling board of player one
 function moveToPlayerTwoPlacement() {
+    document.getElementById("gobtn2").style.display = "none";
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
             let cell = document.getElementById(getId(1, i, j));
@@ -121,7 +122,7 @@ function playerCellClass(value) {
 }
 
 function opponentCellClass(value) {
-    if (value == -2) {
+    if (value == -2 || value == -3) {
         return "grid-item-hit";
     } else if (value == 0) {
         return "grid-item-opponent";
@@ -140,6 +141,74 @@ function gameRunner() {
         }
     }
     loadBoards(1);
+    let opponentCell = document.querySelectorAll(".grid-item-opponent");
+    for (let i = 0; i < opponentCell.length; i++) {
+        opponentCell[i].addEventListener("click", fire);
+    }
+    loadBoards(2);
+    opponentCell = document.querySelectorAll(".grid-item-opponent");
+    for (let i = 0; i < opponentCell.length; i++) {
+        opponentCell[i].addEventListener("click", fire);
+    }
+    playerFirePrep(1);
+    // let opponentCell = document.querySelectorAll(".grid-item-opponent");
+    // for (let i = 0; i < opponentCell.length; i++) {
+    //     opponentCell[i].addEventListener("click", fire);
+    // }
+}
+
+function nextTurn() {
+    let player = numRuns % 2 == 0 ? 1 : 2;
+    playerFirePrep(player);
+}
+
+let fired = false;
+function fire() {
+    let x = ordPair(this.id)[0];
+    let y = ordPair(this.id)[1];
+    let player = getBoardFromId(this.id);
+    let opponent = getBoardFromId(this.id) == 1 ? 2 : 1;
+    if (!fired) {
+        game.firedAt(opponent,x,y);
+        console.log(game.printBoard(1));
+        console.log(game.printBoard(2));
+        fired = true;
+        numRuns++;
+        this.className = opponentCellClass(game.getBoard(opponent)[x][y]);
+    }
+    this.removeEventListener("click", fire);
+    document.getElementById("fireAt").style.visibility = "visible";
+    document.getElementById("fireAtShips").addEventListener("click", nextTurn);
+}
+
+function playerFirePrep(player) {
+    document.getElementById("shipplacement").style.visibility = "hidden";
+    document.getElementById("shipprep").style.visibility = "visible";
+    document.getElementById("gobtn").style.display = "inline-block";
+    document.getElementById("gobtn").removeEventListener("click", moveToPlayerOnePlacement);
+    document.getElementById("gobtn").addEventListener("click", () => playerFire(player));
+    document.getElementById("promptforward").innerHTML = "Ready to continue?";
+    document.getElementById("prepplayer").innerHTML = `Player ${player}`;
+    document.getElementById("fireAt").style.visibility = "hidden";
+    fired = false;
+}
+
+function playerFire(player) {
+    let opponent = player == 1 ? 2 : 1;
+    document.getElementById("shipplacement").style.visibility = "visible";
+    document.getElementById("shipprep").style.visibility = "hidden";
+    document.getElementById("gobtn").style.display = "none";
+    document.getElementById("fireAt").style.visibility = "hidden";
+    loadBoards(player);
+    console.log(player);
+    let playerCells = document.querySelectorAll(".grid-item");
+    for (let i = 0; i < playerCells.length; i++) {
+        playerCells[i].style.pointerEvents = 'none';
+    }
+    let opponentCells = document.querySelectorAll(".grid-item-opponent");
+    for (let i = 0; i < opponentCells.length; i++) {
+        opponentCells[i].style.pointerEvents = 'auto';
+    }
 }
 
 /*----------------------------------------------------------------------------------------------------------------*/
