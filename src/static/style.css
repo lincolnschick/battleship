@@ -70,11 +70,20 @@
 	text-align: center;
 	background-color: rgb(56, 54, 54);
 }
-
+.grid-item-ship-hit {
+	padding: 1.5em;
+	text-align: center;
+	background-color: rgb(13, 17, 236);
+}
+.grid-item-ship-empty {
+	padding: 1.5em;
+	text-align: center;
+	background-color: rgb(236, 165, 13);
+}
 .grid-item-hit {
 	padding: 1.5em;
 	text-align: center;
-	background-color: rgb(56, 54, 54);
+	background-color: rgb(4, 236, 55);
 }
 
 .grid-item-opponent {
@@ -88,7 +97,7 @@
 	padding: 1.5em;
 	border: 1px solid black;
 	text-align: center;
-	background-color: rgb(168, 48, 48);
+	background-color: rgb(181, 218, 49);
 }
 
 .grid-item-opponent:hover {
