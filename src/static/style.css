@@ -73,12 +73,12 @@
 .grid-item-ship-hit {
 	padding: 1.5em;
 	text-align: center;
-	background-color: rgb(27, 137, 165);
+	background-color: rgb(13, 17, 236);
 }
-.grid-item-empty {
+.grid-item-ship-empty {
 	padding: 1.5em;
 	text-align: center;
-	background-color: rgb(148, 0, 136);
+	background-color: rgb(236, 165, 13);
 }
 .grid-item-hit {
 	padding: 1.5em;

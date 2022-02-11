@@ -117,6 +117,10 @@ function playerCellClass(value) {
         return "grid-item-ship";
     } else if (value == 0) {
         return "grid-item";
+    } else if (value == -2) {
+        return "grid-item-ship-hit";
+    } else if (value == -1) {
+        return "grid-item-empty";
     }
 
 }
@@ -166,10 +170,10 @@ let fired = false;
 function fire() {
     let x = ordPair(this.id)[0];
     let y = ordPair(this.id)[1];
-    let player = getBoardFromId(this.id);
-    let opponent = getBoardFromId(this.id) == 1 ? 2 : 1;
+    let opponent = getBoardFromId(this.id)
     if (!fired) {
         game.firedAt(opponent,x,y);
+        console.log(opponent);
         console.log(game.printBoard(1));
         console.log(game.printBoard(2));
         fired = true;
