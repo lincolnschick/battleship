@@ -52,6 +52,8 @@
 
 .grid-item {
 	padding: 1.5em;
+	width: 0px;
+	height: 0px;
 	border: 1px solid black;
 	text-align: center;
 	background-color: white;
