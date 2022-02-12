@@ -13,13 +13,16 @@ function makeRows1(rows, cols) {
     let cell = document.createElement("div");
     container1.appendChild(cell);
     cell.className = "grid-item";
-    if (c > 0) {
-      cell.innerHTML = alpha[c-1];
+    if (c >= 0) {
+      if (c != 0) {
+        cell.innerHTML = alpha[c-1];
+      }
+      cell.className = "grid-label";
     }
   }
   for (let i = 0; i < rows; i++) {
     let label = document.createElement('div');
-    container1.appendChild(label).className = "grid-item";
+    container1.appendChild(label).className = "grid-label";
     label.innerHTML = i + 1;
     for (let j = 0; j < cols; j++) {
       let cell = document.createElement("div");
