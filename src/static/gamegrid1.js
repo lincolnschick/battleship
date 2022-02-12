@@ -6,14 +6,28 @@ const container1 = document.getElementById("container1");
 
 //This function creates grid, just UI, of the given rows and cols
 function makeRows1(rows, cols) {
-  container1.style.setProperty('--grid-rows', rows);            //Sets the style for css
-  container1.style.setProperty('--grid-cols', cols);
-  for (let c = 0; c < (rows * cols); c++) {
+  const alpha = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+  container1.style.setProperty('--grid-rows', rows+1);            //Sets the style for css
+  container1.style.setProperty('--grid-cols', cols+1);
+  for (let c = 0; c < cols + 1; c++) {
     let cell = document.createElement("div");
-    container1.appendChild(cell).className = "grid-item";       //Creates each cell
-    container1.appendChild(cell).id = 'cell' + "1" + c;         //with given params
-  };
-};
+    container1.appendChild(cell);
+    cell.className = "grid-item";
+    if (c > 0) {
+      cell.innerHTML = alpha[c-1];
+    }
+  }
+  for (let i = 0; i < rows; i++) {
+    let label = document.createElement('div');
+    container1.appendChild(label).className = "grid-item";
+    label.innerHTML = i + 1;
+    for (let j = 0; j < cols; j++) {
+      let cell = document.createElement("div");
+      container1.appendChild(cell).className = "grid-item";       //Creates each cell
+      container1.appendChild(cell).id = 'cell' + "1" + (i*10+j);         //with given params
+    }
+  }
+}
 
 //Calls the grid function
 makeRows1(10, 10);
