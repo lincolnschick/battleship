@@ -63,10 +63,24 @@ function moveToPlayerTwoPlacement() {
 }
 /*----------------------------------------------------------------------------------------------------------------*/
 
+function determineShips() {
+    s = "";
+    for (let i = 1; i <= numberOfShips; i++) {
+        s += "1x"+i + ", ";
+    }
+
+    return s.slice(0,-2);
+}
 /** 
  * @param {number} board - which board is being set up
  */
 function moveToPlayerPlacement(board) {
+    alert(`Rules for placement:
+    Place ${numberOfShips} ships on the board of sizes: ${determineShips()}
+    You must place each part of the ship individually
+    You are not allowed to place ships within one block of each other
+    The game will only continue if you correctly place the ships
+    A button will appear at the bottom of the screen once your ships are placed`);
     document.getElementById("shipprep").style.display = "none";
     document.getElementById("shipplacement").style.display = "block";
     document.getElementById("numberofshipsselected").innerText = numberOfShips;
