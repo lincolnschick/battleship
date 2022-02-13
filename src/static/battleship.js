@@ -76,12 +76,24 @@ function moveToPlayerPlacement(board) {
     document.getElementById("shipprep").style.display = "none";
     document.getElementById("shipplacement").style.display = "block";
     document.getElementById("numberofshipsselected").innerText = numberOfShips;
+    showTurn(board);
     loadBoards(board);
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
             let cell = document.getElementById(getId(board, i, j));
             cell.addEventListener("click", editShips);
         }
+    }
+}
+
+//highlights the current player's turn
+function showTurn(player) {
+    if (player == 1) {
+        document.getElementById("player1").firstElementChild.classList.add("turn");
+        document.getElementById("player2").firstElementChild.classList.remove("turn");
+    } else {
+        document.getElementById("player2").firstElementChild.classList.add("turn");
+        document.getElementById("player1").firstElementChild.classList.remove("turn");
     }
 }
 
@@ -226,6 +238,7 @@ function playerFire() {
     document.getElementById("shipprep").style.display = "none";
     document.getElementById("gobtn").style.display = "none";
     document.getElementById("endTurn").style.display = "none";
+    showTurn(player);
     loadBoards(player);
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {

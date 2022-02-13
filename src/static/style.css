@@ -132,3 +132,19 @@
 	text-align: center;
 	background-color: #1fa9d7a9;
 }
+
+#player1 {
+	padding-right: 125px;
+}
+
+#player2 {
+	padding-left: 125px;
+}
+
+.player {
+	white-space: nowrap;
+}
+
+.turn {
+	background-color: yellow;
+}
