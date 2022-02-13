@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------------------------------------------*/
-//Globle variables that are used throughout the game
+//Global variables that are used throughout the game
 let numberOfShips = 0;
 var game = null;
 let numRuns = 0;
@@ -195,13 +195,17 @@ function fire() {
     let x = ordPair(this.id)[0];
     let y = ordPair(this.id)[1];
     let opponent = getBoardFromId(this.id)
+    //only fire once a turn
     if (!fired) {
+        //update logic
         game.firedAt(opponent,x,y);
         fired = true;
-        numRuns++;
+        //update boards
         loadBoards(turnTracker.getTurn());
+        //disable click feature on the cell
         this.removeEventListener("click", fire);
     }
+    //show button to continue
     document.getElementById("endTurn").style.display = "block";
     document.getElementById("endTurnBtn").addEventListener("click", playerFirePrep);
 }
@@ -210,12 +214,14 @@ function fire() {
 function playerFirePrep() {
     if (game.isGameOver()) {
         let winner = turnTracker.getTurn();
+        //shows winning page
         document.getElementById("shipplacement").style.display = "none";
         document.getElementById("endTurnBtn").style.display = "none";
         document.getElementById("winningpage").style.display = "block";
         document.getElementById("whowon").innerHTML = `Player ${winner} won!`;
     } else {
         let player = turnTracker.nextTurn();
+        //shows fire prep phase for next player
         document.getElementById("shipplacement").style.display = "none";
         document.getElementById("shipprep").style.display = "block";
         document.getElementById("gobtn").style.display = "inline-block";
@@ -232,12 +238,14 @@ function playerFirePrep() {
 function playerFire() {
     let player = turnTracker.getTurn();
     let opponent = player == 1 ? 2 : 1;
+    //show board
     document.getElementById("shipplacement").style.display = "block";
     document.getElementById("shipprep").style.display = "none";
     document.getElementById("gobtn").style.display = "none";
     document.getElementById("endTurn").style.display = "none";
     showTurn(player);
     loadBoards(player);
+    //make sure player can't attack self
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
             let cellP = document.getElementById(getId(player, i, j));

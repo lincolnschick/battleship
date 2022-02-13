@@ -120,13 +120,6 @@
 	background-color: rgb(121, 121, 121);
 }
 
-.grid-item-hovered {
-	padding: 1.5em;
-	border: 1px solid black;
-	text-align: center;
-	background-color: #1fa9d7a9;
-}
-
 #player1 {
 	padding-right: 125px;
 }
