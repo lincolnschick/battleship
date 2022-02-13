@@ -122,6 +122,7 @@ class GameBoard {
      * @return {boolean} whether board is valid for game to start
      */
     isValid(numShips) {
+        //Check if the number of filled squares is equal to expected values
         const validNumOnes = numShips * (numShips + 1) / 2;
         let count = this.board.flat().reduce((val, count) => val + count);
         if (count !== validNumOnes) {
@@ -130,8 +131,8 @@ class GameBoard {
         let boardCopy = this.board.map(row => {
             return row.map(val => val);
         });
-        //Check that the correct number of ships are present
-        //Need to cite this code in documentation
+        //Check that the correct number of ships are present with dept first search
+        //Depth-first search code modified from Anatolii Kurochkin at the URL below
         //https://javascript.plainenglish.io/javascript-algorithms-number-of-islands-leetcode-6eff200bdf1
         let counter = 0;
         const dfs = (i, j) => {
