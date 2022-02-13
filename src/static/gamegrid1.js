@@ -7,8 +7,10 @@ const container1 = document.getElementById("container1");
 //This function creates grid, just UI, of the given rows and cols
 function makeRows1(rows, cols) {
   const alpha = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-  container1.style.setProperty('--grid-rows', rows+1);            //Sets the style for css
+  //Sets the style for css
+  container1.style.setProperty('--grid-rows', rows+1);
   container1.style.setProperty('--grid-cols', cols+1);
+  //creates the A-J labels
   for (let c = 0; c < cols + 1; c++) {
     let cell = document.createElement("div");
     container1.appendChild(cell);
@@ -20,6 +22,7 @@ function makeRows1(rows, cols) {
       cell.className = "grid-label";
     }
   }
+  //creates the grid including 1-10 labels
   for (let i = 0; i < rows; i++) {
     let label = document.createElement('div');
     container1.appendChild(label).className = "grid-label";
