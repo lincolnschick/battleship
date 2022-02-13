@@ -68,7 +68,7 @@ function moveToPlayerTwoPlacement() {
  */
 function moveToPlayerPlacement(board) {
     alert(`Rules for placement:
-    Place ${numberOfShips} ships on the board of sizes: ${determineShips()}
+    Place ${numberOfShips} ship(s) on your board of sizes: ${determineShips()}
     You must place each part of the ship individually
     You are not allowed to place ships within one block of each other
     The game will only continue if you correctly place the ships
@@ -191,8 +191,8 @@ function fire() {
         loadBoards(turnTracker.getTurn());
         this.removeEventListener("click", fire);
     }
-    document.getElementById("fireAt").style.display = "block";
-    document.getElementById("fireAtShips").addEventListener("click", playerFirePrep);
+    document.getElementById("endTurn").style.display = "block";
+    document.getElementById("endTurnBtn").addEventListener("click", playerFirePrep);
 }
 
 //Preps the players for firing
@@ -200,7 +200,7 @@ function playerFirePrep() {
     if (game.isGameOver()) {
         let winner = turnTracker.getTurn();
         document.getElementById("shipplacement").style.display = "none";
-        document.getElementById("fireAtShips").style.display = "none";
+        document.getElementById("endTurnBtn").style.display = "none";
         document.getElementById("winningpage").style.display = "block";
         document.getElementById("whowon").innerHTML = `Player ${winner} won!`;
         console.log("here")
@@ -213,7 +213,7 @@ function playerFirePrep() {
         document.getElementById("gobtn").addEventListener("click", playerFire);
         document.getElementById("promptforward").innerHTML = "Ready to continue?";
         document.getElementById("prepplayer").innerHTML = `Player ${player}`;
-        document.getElementById("fireAt").style.display = "none";
+        document.getElementById("endTurn").style.display = "none";
         fired = false;
     }
 }
@@ -225,7 +225,7 @@ function playerFire() {
     document.getElementById("shipplacement").style.display = "block";
     document.getElementById("shipprep").style.display = "none";
     document.getElementById("gobtn").style.display = "none";
-    document.getElementById("fireAt").style.display = "none";
+    document.getElementById("endTurn").style.display = "none";
     loadBoards(player);
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
