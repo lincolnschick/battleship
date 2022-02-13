@@ -62,15 +62,7 @@ function moveToPlayerTwoPlacement() {
     moveToPlayerPlacement(2);
 }
 /*----------------------------------------------------------------------------------------------------------------*/
-
-function determineShips() {
-    s = "";
-    for (let i = 1; i <= numberOfShips; i++) {
-        s += "1x"+i + ", ";
-    }
-
-    return s.slice(0,-2);
-}
+//Function that goes preps a players board before beiing able to place ships
 /** 
  * @param {number} board - which board is being set up
  */
@@ -93,6 +85,7 @@ function moveToPlayerPlacement(board) {
     }
 }
 
+//Function that determines whether a clicked cell is a valid ship placeement
 function editShips() {
     let x = ordPair(this.id)[0];
     let y = ordPair(this.id)[1];
@@ -113,6 +106,19 @@ function editShips() {
     }
 }
 
+/*----------------------------------------------------------------------------------------------------------------*/
+//Mostly utility functions
+//Determines what ships (x by y) ships are in the game
+function determineShips() {
+    s = "";
+    for (let i = 1; i <= numberOfShips; i++) {
+        s += "1x"+i + ", ";
+    }
+
+    return s.slice(0,-2);
+}
+
+//Loads each players boards
 function loadBoards(player) {
     const opponent = player == 1 ? 2 : 1;
     const playerBoard = game.getBoard(player);
@@ -127,6 +133,7 @@ function loadBoards(player) {
     }
 }
 
+//Determines the cell type the current player should be
 function playerCellClass(value) {
     if (value == -3) {
         return "grid-item-sunk";
@@ -141,6 +148,7 @@ function playerCellClass(value) {
     }
 }
 
+//Determines the cell type the current opponent should be
 function opponentCellClass(value) {
     if (value == -2) {
         return "grid-item-hit";
@@ -155,22 +163,7 @@ function opponentCellClass(value) {
     }
 }
 
-function gameRunner() {
-    document.getElementById("placeships").style.display = "none";
-    for (let i = 0; i < 10; i++) {
-        for (let j = 0; j < 10; j++) {
-            let cell2 = document.getElementById(getId(2, i, j));
-            let cell1 = document.getElementById(getId(1, i, j));
-            //Disable editing of player 2's board
-            cell2.removeEventListener("click", editShips);
-            cell1.addEventListener("click", fire);
-            cell2.addEventListener("click", fire);
-        }
-    }
-    turnTracker = new Turn(2);
-    playerFirePrep();
-}
-
+//Determines who's turn it is
 class Turn {
     constructor(start) {
         this.turn = start;
@@ -183,8 +176,10 @@ class Turn {
         return this.turn;
     }
 }
-
+/*----------------------------------------------------------------------------------------------------------------*/
+//Global fire function
 let fired = false;
+//function that if the player has not fired, fire at the clicked cell and remove its event
 function fire() {
     let x = ordPair(this.id)[0];
     let y = ordPair(this.id)[1];
@@ -200,6 +195,7 @@ function fire() {
     document.getElementById("fireAtShips").addEventListener("click", playerFirePrep);
 }
 
+//Preps the players for firing
 function playerFirePrep() {
     if (game.isGameOver()) {
         let winner = turnTracker.getTurn();
@@ -222,6 +218,7 @@ function playerFirePrep() {
     }
 }
 
+//Depending on who is currently the player, gives events to the other board
 function playerFire() {
     let player = turnTracker.getTurn();
     let opponent = player == 1 ? 2 : 1;
@@ -241,3 +238,19 @@ function playerFire() {
 }
 
 /*----------------------------------------------------------------------------------------------------------------*/
+//Function that runs the whole game
+function gameRunner() {
+    document.getElementById("placeships").style.display = "none";
+    for (let i = 0; i < 10; i++) {
+        for (let j = 0; j < 10; j++) {
+            let cell2 = document.getElementById(getId(2, i, j));
+            let cell1 = document.getElementById(getId(1, i, j));
+            //Disable editing of player 2's board
+            cell2.removeEventListener("click", editShips);
+            cell1.addEventListener("click", fire);
+            cell2.addEventListener("click", fire);
+        }
+    }
+    turnTracker = new Turn(2);
+    playerFirePrep();
+}
