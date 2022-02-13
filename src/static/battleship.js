@@ -215,7 +215,6 @@ function playerFirePrep() {
         document.getElementById("endTurnBtn").style.display = "none";
         document.getElementById("winningpage").style.display = "block";
         document.getElementById("whowon").innerHTML = `Player ${winner} won!`;
-        console.log("here")
     } else {
         let player = turnTracker.nextTurn();
         document.getElementById("shipplacement").style.display = "none";
