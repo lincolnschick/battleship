@@ -2,7 +2,6 @@
 //Global variables that are used throughout the game
 let numberOfShips = 0;
 var game = null;
-let numRuns = 0;
 let turnTracker = null;
 
 /*----------------------------------------------------------------------------------------------------------------*/
