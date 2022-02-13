@@ -44,12 +44,6 @@
 	grid-template-columns: repeat(var(--grid-cols), 1fr);
 }
 
-#containerS {
-	display: grid;
-	grid-template-rows: repeat(var(--grid-rows), 1fr);
-	grid-template-columns: repeat(var(--grid-cols), 1fr);
-}
-
 .grid-label {
 	padding: 1.5em;
 	width: 0px;

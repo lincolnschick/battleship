@@ -14,7 +14,6 @@ function moveToShipSelect() {
     for(let i = 0; i < shipSelectButtons.length; i++) {
         shipSelectButtons[i].addEventListener('click', () => {                  //Creates buttons that alter the 
             numberOfShips = i+1;                                                //numberOfShips
-            makeRowsST(numberOfShips);
             moveToPlayerOnePlacementPrep();                                     //Moves to the next step of game
         });
     }
