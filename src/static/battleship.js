@@ -70,7 +70,8 @@ function moveToPlayerPlacement(board) {
     You must place each part of the ship individually
     You are not allowed to place ships within one block of each other
     The game will only continue if you correctly place the ships
-    A button will appear at the bottom of the screen once your ships are placed`);
+    A button will appear at the bottom of the screen once your ships are placed
+    Upon firing, the chosen cell turns blue for a miss, red for a hit, and black if the ship is sunk`);
     document.getElementById("shipprep").style.display = "none";
     document.getElementById("shipplacement").style.display = "block";
     document.getElementById("numberofshipsselected").innerText = numberOfShips;
