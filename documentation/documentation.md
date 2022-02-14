@@ -14,7 +14,7 @@ The **src** folder contains the source files required to run our _Battleship_ pr
 | battleship.js | Logic file used to handle in-game events (Cycle between players). |
 | gamegrid1.js | Generates and modifies Player 1's game-board (Left hand side). |
 | gamegrid2.js | Generates and modifies Player 2's game-board (Right hand side). |
-| gamelogic.js| Logic file containing various game related functions. |
+| gamelogic.js| Logic file helping store board data and containing various game related functions. |
 | style.css | Establishes the sizes, colors, and text formatting for each object in the html file. |
 | battleship.html | Creates the webpage, establishes 'containers' and pulls in .js files.  |
 
@@ -125,7 +125,7 @@ In our construction of a search algorithm (to check the validity of moves), we u
 ```
 
 ##### Why JavaScript?
-- We felt that while Battleship was achievable in an object oriented lanugage like C/C++, we wanted to strive towards a project that not only _functions_, but also has a certain visual appeal.
+- We felt that while Battleship was achievable in an object oriented language like C++, we wanted to strive towards a project that not only _functions_, but also has a certain visual appeal.
 - While certain compromises were made to meet the required deadline, we still feel as though our software represents a unique take on the classic _**Battleship**_ game.
 
 
