@@ -93,6 +93,37 @@ This program follows the basic rules of _Battleship_. While the program itself p
 
 ## Development
 
+### Code Source / Usage
+In our construction of a search algorithm (to check the validity of moves), we used a _Depth First Search_ algorithm. This code was modified from its original source (//https://javascript.plainenglish.io/javascript-algorithms-number-of-islands-leetcode-6eff200bdf1), and is listed below:
+
+```JavaScript
+
+//Check that the correct number of ships are present with dept first search
+        //Depth-first search code modified from Anatolii Kurochkin at the URL below
+        //https://javascript.plainenglish.io/javascript-algorithms-number-of-islands-leetcode-6eff200bdf1
+        let counter = 0;
+        const dfs = (i, j) => {
+            if (i >= 0 && j >= 0 && i < 10 && j < 10 && boardCopy[i][j] === 1) {
+                boardCopy[i][j] = 0;
+                dfs(i + 1, j); // top
+                dfs(i, j + 1); // right
+                dfs(i - 1, j); // bottom
+                dfs(i, j - 1); // left
+            }
+        };
+        for (let i = 0; i < 10; i++) {
+            for (let j = 0; j < 10; j++) {
+                if (boardCopy[i][j] === 1) {
+                    counter += 1;
+                    dfs(i, j);
+                }
+            }
+        }
+        return counter == numShips;
+    }
+
+```
+
 ##### Why JavaScript?
 - We felt that while Battleship was achievable in an object oriented lanugage like C/C++, we wanted to strive towards a project that not only _functions_, but also has a certain visual appeal.
 - While certain compromises were made to meet the required deadline, we still feel as though our software represents a unique take on the classic _**Battleship**_ game.
