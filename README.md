@@ -40,7 +40,7 @@ In addtion, our team has developed some ideas for future improvements that we si
 | Scoreboard | Keep track of who has more hits, or who has won more games. |
 | New Game +| Create a mechanic that rewards consistent wins. |
 
-As contributions grow larger and the files become more complex/intertwined, we recommend finding an alternative solution to the < div > containers currently used. As it stands, additions to the game screen are limited by the space on your screen, as each < div > takes up space regardless if it is currently shown or not.
+As contributions grow larger and the files become more complex/intertwined, we recommend finding an alternative solution to the < div > containers currently used. As it stands, additions to the game screen require substantial JavaScript bloat to hide/show elements.
 
 
 > Additionally, make sure to include any _**new**_ files under the script inclusion listed at the bottom of the html:
@@ -100,6 +100,3 @@ This program follows the basic rules of _Battleship_. While the program itself p
 
 ## License
 This software is not currently liscensed in any capacity or copyrighted in any way. However, while permission to use this software for personal development is allowed, commercial use is **not**.
-
-
-
