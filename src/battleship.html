@@ -5,17 +5,18 @@
     </head>
     <link rel="stylesheet" href="./static/style.css">
     <body>
-        <div id="startmenu" class="gamepage" style="visibility:visible;">
+        <div id="startmenu" class="gamepage" style="display: block; margin-top: 150px;">
             <div class="box-container">
                 <div class="box">
-                    <h1 style="text-align: center;">BATTLESHIP</h1>
+                    <!-- <h1 style="text-align: center;">BATTLESHIP</h1> -->
+                    <img src="./static/battleshiplogo.png" style="height: 128px;">
                 </div>
-                <div class="box">
+                <div class="box" style="margin-top: 40px;">
                     <button onclick="moveToShipSelect()">START</button>
                 </div>
             </div>
         </div>
-        <div id="shipselect" class="gamepage" style="visibility:hidden; margin-top:-100px;">
+        <div id="shipselect" class="gamepage" style="display:none; margin-top: 150px;">
             <div class="box-container">
                 <div class="box">
                     <button class="shipselectbutton">1 SHIP</button>
@@ -26,25 +27,30 @@
                 </div>
             </div>
         </div>
-        <div id="p1shipprep" class="gamepage" style="visibility:hidden; margin-top:-100px;">
+        <div id="shipprep" class="gamepage" style="display:none; margin-top: 150px;">
             <div class="box-container">
                 <div class="box">
-                    <h1>Player 1</h1>
+                    <h1 id="prepplayer">Player 1</h1>
                 </div>
                 <div class="box" style="margin-top: 30px">
-                    <h1>Ready to start ship placement?</h1>
+                    <h1 id="promptforward" >Ready to start ship placement?</h1>
                 </div>
                 <div class="box">
-                    <button onclick="moveToPlayerOnePlacement()">GO</button>
+                    <button id="gobtn">GO</button>
+                    <button id="gobtn2" style="display: none;">GO</button>
                 </div>
             </div>
         </div>
-        <div id="p1shipplacement" class="gamepage" style="visibility:hidden; margin-top:-200px;">
+        <div id="shipplacement" class="gamepage" style="display:none;">
             <div class="box-container">
                 <div class="box">
-                    <h3 style="margin-right:10px;">Number of ships selected:</h3><h3 id="numberofshipsselected">0</h3>
+                    <h2 id="player1"><span class="player">Player 1</span></h2>
+                    <h2 style="padding-right: 10px; white-space: nowrap;">Number of ships selected:</h2>
+                    <h2 id="numberofshipsselected"> 0</h2>
+                    <h2 id="player2"><span class="player">Player 2</span></h2>
                 </div>
                 <div class="box">
+                    
                     <div id="container1">
                         
                     </div>
@@ -53,16 +59,34 @@
                         
                     </div>
                 </div>
-                <div class="box" style="margin-top: 40px;">
-                    <div id="containerS">
-
-                    </div>
-                </div> 
+            </div>
+        </div>
+        <div id="placeships" style="display:none;">
+            <div class="box-container">
+                <div class="box">
+                    <button id="placeshipsbtn">Place Ships</button>
+                </div>
+            </div>
+        </div>
+        <div id="endTurn" style ="display: none;">
+            <div class="box-container">
+                <div class="box">
+                    <button id="endTurnBtn">End Turn</button>
+                </div>
+            </div>
+        </div>
+        <div id="winningpage" class="gamepage" style="display: none; margin-top: 150px;">
+            <div class="box-container">
+                <div class="box">
+                    <h1 style="text-align: center;" id="whowon">You Won!</h1>
+                </div>
+                <div class="box">
+                    <button onclick="location.reload()">Play Again</button>
+                </div>
             </div>
         </div>
     </body>
     <script type="text/javascript" src="./static/gamelogic.js"></script>
-    <script type="text/javascript" src="./static/shiptable.js"></script>
     <script type="text/javascript" src="./static/battleship.js"></script>
     <script type="text/javascript" src="./static/gamegrid1.js"></script>
     <script type="text/javascript" src="./static/gamegrid2.js"></script>
