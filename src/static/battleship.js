@@ -3,7 +3,24 @@
 let numberOfShips = 0;
 var game = null;
 let turnTracker = null;
-
+let miss_snd = new sound("./static/miss.mp3")
+let hit_snd = new sound("./static/hit.mp3")
+/*----------------------------------------------------------------------------------------------------------------*/
+//Funcionality to play sounds
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+  }
+  this.stop = function(){
+    this.sound.pause();
+  }
+}
 /*----------------------------------------------------------------------------------------------------------------*/
 //First function that is called, simply is called when start is pressed
 function moveToShipSelect() {
@@ -11,7 +28,7 @@ function moveToShipSelect() {
     document.getElementById("shipselect").style.display = "block";         //Ids
     const shipSelectButtons = document.querySelectorAll(".shipselectbutton");
     for(let i = 0; i < shipSelectButtons.length; i++) {
-        shipSelectButtons[i].addEventListener('click', () => {                  //Creates buttons that alter the 
+        shipSelectButtons[i].addEventListener('click', () => {                  //Creates buttons that alter the
             numberOfShips = i+1;                                                //numberOfShips
             moveToPlayerOnePlacementPrep();                                     //Moves to the next step of game
         });
@@ -61,7 +78,7 @@ function moveToPlayerTwoPlacement() {
 }
 /*----------------------------------------------------------------------------------------------------------------*/
 //Function that goes preps a players board before beiing able to place ships
-/** 
+/**
  * @param {number} board - which board is being set up
  */
 function moveToPlayerPlacement(board) {
@@ -197,8 +214,16 @@ function fire() {
     let opponent = getBoardFromId(this.id)
     //only fire once a turn
     if (!fired) {
+        //fires and plays a sound depending on fire success
+        if(game.firedAt(opponent,x,y))
+        {
+          hit_snd.play();
+        }
+        else
+        {
+          miss_snd.play();
+        }
         //update logic
-        game.firedAt(opponent,x,y);
         fired = true;
         //update boards
         loadBoards(turnTracker.getTurn());

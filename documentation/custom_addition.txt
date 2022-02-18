@@ -1,0 +1,1 @@
+Duy and Landen will be responsible for the custom addition. We will be implementing a scoreboard feature. This will add a box to the gameplay screen that keeps track of each player's hits, misses, and sinks. Once a ship is sunk, its length will be noted. In addition, sound effects will be added for hits and misses
