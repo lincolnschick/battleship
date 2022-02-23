@@ -26,6 +26,7 @@ function sound(src) {
 function moveToShipSelect() {
     document.getElementById("startmenu").style.display = "none";           //Hides and reveals the appropriate
     document.getElementById("shipselect").style.display = "block";         //Ids
+    document.getElementById("aiselect").style.display = "block"; 
     const shipSelectButtons = document.querySelectorAll(".shipselectbutton");
     for(let i = 0; i < shipSelectButtons.length; i++) {
         shipSelectButtons[i].addEventListener('click', () => {                  //Creates buttons that alter the
@@ -34,7 +35,6 @@ function moveToShipSelect() {
         });
     }
 }
-
 /*----------------------------------------------------------------------------------------------------------------*/
 //Here buttons are made that call functions that determine player placement
 function moveToPlayerOnePlacementPrep() {
