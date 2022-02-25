@@ -233,6 +233,14 @@ function fire() {
     //show button to continue
     document.getElementById("endTurn").style.display = "block";
     document.getElementById("endTurnBtn").addEventListener("click", playerFirePrep);
+    if(turnTracker.getTurn() == 1)      //updates when user fires
+    {
+        statUpdater(1);
+    }
+    if(turnTracker.getTurn() == 2)
+    {
+        statUpdater(2);
+    }
 }
 
 //Preps the players for firing
@@ -242,9 +250,11 @@ function playerFirePrep() {
         //shows winning page
         document.getElementById("shipplacement").style.display = "none";
         document.getElementById("endTurnBtn").style.display = "none";
+        document.getElementById("statistics").style.display = "none";
         document.getElementById("winningpage").style.display = "block";
         document.getElementById("whowon").innerHTML = `Player ${winner} won!`;
     } else {
+        document.getElementById("statistics").style.display = "none";
         let player = turnTracker.nextTurn();
         //shows fire prep phase for next player
         document.getElementById("shipplacement").style.display = "none";
@@ -265,6 +275,7 @@ function playerFire() {
     let opponent = player == 1 ? 2 : 1;
     //show board
     document.getElementById("shipplacement").style.display = "block";
+    document.getElementById("statistics").style.display = "block";
     document.getElementById("shipprep").style.display = "none";
     document.getElementById("gobtn").style.display = "none";
     document.getElementById("endTurn").style.display = "none";
@@ -278,6 +289,14 @@ function playerFire() {
             cellP.style.pointerEvents = 'none';
             cellO.style.pointerEvents = 'auto';
         }
+    }
+    if(turnTracker.getTurn() == 1)          //Updates stats depending on which player's turn it is, updates when user clicks square to fire
+    {
+        statUpdater(1);
+    }
+    if(turnTracker.getTurn() == 2)
+    {
+        statUpdater(2);
     }
 }
 
@@ -297,4 +316,39 @@ function gameRunner() {
     }
     turnTracker = new Turn(2);
     playerFirePrep();
+}
+
+/*----------------------------------------------------------------------------------------------------------------*/
+function statUpdater(player) {      //Function that updates statistics of the player 
+    if(player == 1)
+    {
+        let num = game.board2.hits/(game.board2.hits+game.board2.misses) * 100;
+        document.getElementById("stats").innerHTML = "Player 1 Stats";
+        document.getElementById("shots").innerHTML = "Shots: " + (game.board2.hits + game.board2.misses);       //Hits and misses added up to get number of shots
+        document.getElementById("misses").innerHTML = "Misses: " + game.board2.misses;
+        if(game.board2.hits+game.board2.misses == 0)
+        {
+            document.getElementById("accuracy").innerHTML = "Accuracy: 0%"         //Accuracy set to 0% because 0 cannot be divided by 0
+        }
+        else
+        {
+            document.getElementById("accuracy").innerHTML = "Accuracy: " + (Math.round(num*100)/100).toFixed(2) + "%";      //Accuracy of player is calculated and rounded
+        }
+    }
+    if(player == 2)
+    {
+        let num = game.board1.hits/(game.board1.hits+game.board1.misses) * 100;
+        document.getElementById("stats").innerHTML = "Player 2 Stats";
+        document.getElementById("shots").innerHTML = "Shots: " + (game.board1.hits + game.board1.misses);
+        document.getElementById("misses").innerHTML = "Misses: " + game.board1.misses;
+        if(game.board1.hits+game.board1.misses == 0)
+        {
+            document.getElementById("accuracy").innerHTML = "Accuracy: 0%"         
+        }
+        else
+        {
+            document.getElementById("accuracy").innerHTML = "Accuracy: " +  (Math.round(num*100)/100).toFixed(2) + "%";
+        }
+    }
+
 }
