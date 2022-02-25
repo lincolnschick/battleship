@@ -55,6 +55,8 @@ function moveToPlayerOnePlacement() {
 function moveToPlayerTwoPlacementPrep() {
     document.getElementById("shipplacement").style.display = "none";
     document.getElementById("placeships").style.display = "none";
+    document.getElementById("aiselect").style.display = "none";  //Creates buttons for selecting playing against AI
+    document.getElementById("playAI").style.display = "none";
     document.getElementById("shipprep").style.display = "block";
     document.getElementById("gobtn").style.display = "none";
     document.getElementById("gobtn2").style.display = "inline-block";
