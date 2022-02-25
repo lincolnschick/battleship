@@ -10,6 +10,8 @@ class GameBoard {
     constructor(){
         this.rows = 10;
         this.cols = 10;
+        this.hits = 0;
+        this.misses = 0;
         this.board = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
     }
     /**
@@ -67,11 +69,13 @@ class GameBoard {
     //A method that simply fires at the given cell and adjusts state accordingly.
     firedAt( row, col ){
         if ( this.board[ row ][ col ]  == 1 ){
+            this.hits++;
             this.board[ row ][ col ] = -2;
             //If ship becomes sunk, this method will update all ship cells
             this._isShipSunk(row, col);
             return true;
         } else {
+            this.misses++;
             this.board[ row ][ col ] = -1;
             return false;
         }
@@ -187,7 +191,6 @@ class GameBoard {
             }
         } return( true );
     }
-
 }
 /*----------------------------------------------------------------------------------------------------------------*/
 //This is the only class the front end will interact with
@@ -201,7 +204,6 @@ class Battleship {
         this.board1 = new GameBoard();
         this.board2 = new GameBoard();
     }
-
     /**
      * @param {number} board - 1 or 2
      * @return {boolean} whether given board is valid for game to start
@@ -303,5 +305,4 @@ class Battleship {
         }
     }
 }
-
 /*----------------------------------------------------------------------------------------------------------------*/
