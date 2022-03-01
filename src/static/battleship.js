@@ -48,7 +48,6 @@ function moveToShipSelect() {
     document.getElementById("aiselect").style.display = "none";   
     document.getElementById("difficultyselect").style.display = "none";                                                                        //Hides and reveals the appropriate
     document.getElementById("shipselect").style.display = "block";         //Ids
-    document.getElementById("aiselect").style.display = "block";  //Creates buttons for selecting playing against AI
     const shipSelectButtons = document.querySelectorAll(".shipselectbutton");
     for(let i = 0; i < shipSelectButtons.length; i++) {
         shipSelectButtons[i].addEventListener('click', () => {                  //Creates buttons that alter the
