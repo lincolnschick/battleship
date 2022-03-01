@@ -24,6 +24,8 @@ function sound(src) {
 /*----------------------------------------------------------------------------------------------------------------*/
 //First function that is called, simply is called when start is pressed
 function moveToShipSelect() {
+    document.getElementById("aiselect").style.display = "none";
+    document.getElementById("playAI").style.display = "none";
     document.getElementById("startmenu").style.display = "none";           //Hides and reveals the appropriate
     document.getElementById("shipselect").style.display = "block";         //Ids
     document.getElementById("aiselect").style.display = "block";  //Creates buttons for selecting playing against AI
@@ -40,6 +42,8 @@ function moveToShipSelect() {
 //Here buttons are made that call functions that determine player placement
 function moveToPlayerOnePlacementPrep() {
     document.getElementById("shipselect").style.display = "none";
+    document.getElementById("aiselect").style.display = "none";
+    document.getElementById("playAI").style.display = "none";
     document.getElementById("shipprep").style.display = "block";
     document.getElementById("gobtn").addEventListener("click", moveToPlayerOnePlacement);
     document.getElementById("placeshipsbtn").addEventListener("click", moveToPlayerTwoPlacementPrep);
@@ -55,8 +59,6 @@ function moveToPlayerOnePlacement() {
 function moveToPlayerTwoPlacementPrep() {
     document.getElementById("shipplacement").style.display = "none";
     document.getElementById("placeships").style.display = "none";
-    document.getElementById("aiselect").style.display = "none";  //Creates buttons for selecting playing against AI
-    document.getElementById("playAI").style.display = "none";
     document.getElementById("shipprep").style.display = "block";
     document.getElementById("gobtn").style.display = "none";
     document.getElementById("gobtn2").style.display = "inline-block";
