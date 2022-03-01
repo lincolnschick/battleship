@@ -12,7 +12,24 @@
                     <img src="./static/battleshiplogo.png" style="height: 128px;">
                 </div>
                 <div class="box" style="margin-top: 40px;">
-                    <button onclick="moveToShipSelect()">START</button>
+                    <button onclick="moveToAISelect()">START</button>
+                </div>
+            </div>
+        </div>
+        <div id="aiselect" class="gamepage" style="display:none; margin-top: 150px;">
+            <div class="box-container">
+                <div class="box">
+                    <button class="aiselectbutton" onclick="moveToShipSelect()">TWO PLAYER</button>
+                    <button class="aiselectbutton" onclick="moveToDifficultySelect()">AI</button>
+                </div>
+            </div>
+        </div>
+        <div id="difficultyselect" class="gamepage" style="display:none; margin-top: 150px;">
+            <div class="box-container">
+                <div class="box">
+                    <button class="difficultyselectbutton">EASY</button>
+                    <button class="difficultyselectbutton">NORMAL</button>
+                    <button class="difficultyselectbutton">HARD</button>
                 </div>
             </div>
         </div>
