@@ -1,6 +1,7 @@
 /*----------------------------------------------------------------------------------------------------------------*/
 //Global variables that are used throughout the game
 let numberOfShips = 0;
+let difficulty = 0;
 var game = null;
 let turnTracker = null;
 let miss_snd = new sound("./static/miss.mp3")
@@ -21,12 +22,31 @@ function sound(src) {
     this.sound.pause();
   }
 }
+
+function moveToAISelect(){
+    document.getElementById("startmenu").style.display = "none"
+    document.getElementById("aiselect").style.display = "block";
+}
+
+function moveToDifficultySelect(){
+    document.getElementById("aiselect").style.display = "none";
+    document.getElementById("difficultyselect").style.display = "block";
+    const difficultySelectButtons = document.querySelectorAll(".difficultyselectbutton");
+    for(let i=0; i<difficultySelectButtons.length; i++)
+    {
+        difficultySelectButtons[i].addEventListener('click', () => {
+            difficulty = i;
+            moveToShipSelect();
+        });
+    }
+}
+
+
 /*----------------------------------------------------------------------------------------------------------------*/
 //First function that is called, simply is called when start is pressed
 function moveToShipSelect() {
-    document.getElementById("aiselect").style.display = "none";
-    document.getElementById("playAI").style.display = "none";
-    document.getElementById("startmenu").style.display = "none";           //Hides and reveals the appropriate
+    document.getElementById("aiselect").style.display = "none";   
+    document.getElementById("difficultyselect").style.display = "none";                                                                        //Hides and reveals the appropriate
     document.getElementById("shipselect").style.display = "block";         //Ids
     document.getElementById("aiselect").style.display = "block";  //Creates buttons for selecting playing against AI
     const shipSelectButtons = document.querySelectorAll(".shipselectbutton");
@@ -42,11 +62,18 @@ function moveToShipSelect() {
 //Here buttons are made that call functions that determine player placement
 function moveToPlayerOnePlacementPrep() {
     document.getElementById("shipselect").style.display = "none";
-    document.getElementById("aiselect").style.display = "none";
-    document.getElementById("playAI").style.display = "none";
+    document.getElementById("difficultyselect").style.display = "none";
     document.getElementById("shipprep").style.display = "block";
     document.getElementById("gobtn").addEventListener("click", moveToPlayerOnePlacement);
-    document.getElementById("placeshipsbtn").addEventListener("click", moveToPlayerTwoPlacementPrep);
+    if (difficulty == 0)
+    {
+        document.getElementById("placeshipsbtn").addEventListener("click", moveToPlayerTwoPlacementPrep);
+    }
+    if (difficulty == 1)
+    {
+        document.getElementById("placeshipsbtn").addEventListener("click", moveToAIPlacement);  //need to implement ai random placement
+    }
+        
 }
 
 //Goes to player one placement after creating the battleship class
