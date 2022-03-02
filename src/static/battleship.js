@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------------------------------------------*/
 //Global variables that are used throughout the game
 let numberOfShips = 0;
-let difficulty = 0;
+let difficulty = -1;
 var game = null;
 let turnTracker = null;
 let miss_snd = new sound("./static/miss.mp3")
@@ -36,6 +36,7 @@ function moveToDifficultySelect(){
     {
         difficultySelectButtons[i].addEventListener('click', () => {
             difficulty = i;
+            alert(difficulty);
             moveToShipSelect();
         });
     }
@@ -64,14 +65,20 @@ function moveToPlayerOnePlacementPrep() {
     document.getElementById("difficultyselect").style.display = "none";
     document.getElementById("shipprep").style.display = "block";
     document.getElementById("gobtn").addEventListener("click", moveToPlayerOnePlacement);
-    if (difficulty == 0)
+    if (difficulty == -1)
     {
+
         document.getElementById("placeshipsbtn").addEventListener("click", moveToPlayerTwoPlacementPrep);
     }
-    if (difficulty == 1)
+    if (difficulty == 0)
+    {
+        alert("Move onto AI mans");
+        document.getElementById("placeshipsbtn").addEventListener("click", AIShipPlacement);
+    }
+   /* if (difficulty == 1)
     {
         document.getElementById("placeshipsbtn").addEventListener("click", moveToAIPlacement);  //need to implement ai random placement
-    }
+    }*/
         
 }
 
@@ -91,7 +98,30 @@ function moveToPlayerTwoPlacementPrep() {
     document.getElementById("gobtn2").addEventListener("click", moveToPlayerTwoPlacement)
     document.getElementById("prepplayer").innerHTML = "Player 2";
 }
+/*----------------------------------------------------------------------------------------------------------------*/
+function AIShipPlacement()
+{
+    alert("Hello I am AI.");
+    document.getElementById("gobtn2").style.display = "none";
+    for (let i = 0; i < 10; i++) {
+        for (let j = 0; j < 10; j++) {
+            let cell = document.getElementById(getId(1, i, j));
+            //Disable editing of player 1's board
+            cell.removeEventListener("click", editShips);
+        }
+    }
+    let placeShipBtn = document.getElementById("placeshipsbtn")
+    placeShipBtn.removeEventListener("click", moveToPlayerTwoPlacementPrep)
 
+
+    //yeet
+    document.getElementById("shipprep").style.display = "none";
+    document.getElementById("shipplacement").style.display = "block";
+    document.getElementById("numberofshipsselected").innerText = numberOfShips;
+    showTurn(board);
+    loadBoards(board);
+
+}
 //Goes to player two placement after disabling board of player one
 function moveToPlayerTwoPlacement() {
     document.getElementById("gobtn2").style.display = "none";
