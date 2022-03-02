@@ -36,7 +36,7 @@ function moveToDifficultySelect(){
     {
         difficultySelectButtons[i].addEventListener('click', () => {
             difficulty = i;
-            alert(difficulty);
+            alert(difficulty); //delete later
             moveToShipSelect();
         });
     }
@@ -102,25 +102,17 @@ function moveToPlayerTwoPlacementPrep() {
 function AIShipPlacement()
 {
     alert("Hello I am AI.");
-    document.getElementById("gobtn2").style.display = "none";
-    for (let i = 0; i < 10; i++) {
-        for (let j = 0; j < 10; j++) {
-            let cell = document.getElementById(getId(1, i, j));
-            //Disable editing of player 1's board
-            cell.removeEventListener("click", editShips);
-        }
-    }
-    let placeShipBtn = document.getElementById("placeshipsbtn")
-    placeShipBtn.removeEventListener("click", moveToPlayerTwoPlacementPrep)
-
-
-    //yeet
-    document.getElementById("shipprep").style.display = "none";
-    document.getElementById("shipplacement").style.display = "block";
-    document.getElementById("numberofshipsselected").innerText = numberOfShips;
-    showTurn(board);
-    loadBoards(board);
-
+    document.getElementById("shipplacement").style.display = "none";
+    document.getElementById("placeships").style.display = "none";
+    document.getElementById("shipprep").style.display = "block";
+    document.getElementById("gobtn").style.display = "none";
+    document.getElementById("gobtn2").style.display = "inline-block";
+    document.getElementById("gobtn2").addEventListener("click", AITester)
+    document.getElementById("prepplayer").innerHTML = "AI";
+}
+function AITester()
+{
+    alert("IM PLACING SHIPS BOI");
 }
 //Goes to player two placement after disabling board of player one
 function moveToPlayerTwoPlacement() {
@@ -211,7 +203,7 @@ function determineShips() {
 function loadBoards(player) {
     const opponent = player == 1 ? 2 : 1;
     const playerBoard = game.getBoard(player);
-    const opponentBoard = game.getBoard(opponent, hidden=true);
+    const opponentBoard = game.getBoard(opponent, hidden=false);
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
             let playerCell = document.getElementById(getId(player, i, j));
@@ -411,5 +403,4 @@ function statUpdater(player) {      //Function that updates statistics of the pl
             document.getElementById("accuracy").innerHTML = "Accuracy: " +  (Math.round(num*100)/100).toFixed(2) + "%";
         }
     }
-
 }
