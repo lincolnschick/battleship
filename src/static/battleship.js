@@ -113,6 +113,7 @@ function AIShipPlacement()
 function AITester()
 {
     alert("IM PLACING SHIPS BOI");
+     
 }
 //Goes to player two placement after disabling board of player one
 function moveToPlayerTwoPlacement() {
