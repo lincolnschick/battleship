@@ -67,7 +67,7 @@ function moveToPlayerOnePlacementPrep() {
     document.getElementById("gobtn").addEventListener("click", moveToPlayerOnePlacement);
     if (difficulty == -1)
     {
-
+        alert("regular game");
         document.getElementById("placeshipsbtn").addEventListener("click", moveToPlayerTwoPlacementPrep);
     }
     if (difficulty == 0)
