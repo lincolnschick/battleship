@@ -12,10 +12,30 @@
                     <img src="./static/battleshiplogo.png" style="height: 128px;">
                 </div>
                 <div class="box" style="margin-top: 40px;">
-                    <button onclick="moveToShipSelect()">START</button>
+                    <button onclick="moveToAISelect()">START</button>
                 </div>
             </div>
         </div>
+        <div id="aiselect" class="gamepage" style="display:none; margin-top: 150px;">
+            <div class="box-container">
+                <div class="box">
+                    <button class="aiselectbutton" onclick="moveToShipSelect()">TWO PLAYER</button>
+                    <button class="aiselectbutton" onclick="moveToDifficultySelect()">AI</button>
+                </div>
+            </div>
+        </div>
+        <div id="difficultyselect" class="gamepage" style="display:none; margin-top: 150px;">
+            <div class="box-container">
+                <div class="box">
+                    <button class="difficultyselectbutton">EASY</button>
+                    <button class="difficultyselectbutton">NORMAL</button>
+                    <button class="difficultyselectbutton">HARD</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
         <div id="shipselect" class="gamepage" style="display:none; margin-top: 150px;">
             <div class="box-container">
                 <div class="box">
@@ -38,6 +58,7 @@
                 <div class="box">
                     <button id="gobtn">GO</button>
                     <button id="gobtn2" style="display: none;">GO</button>
+                    <button id="startgame" style="display: none">Start Game</button>
                 </div>
             </div>
         </div>
@@ -50,13 +71,13 @@
                     <h2 id="player2"><span class="player">Player 2</span></h2>
                 </div>
                 <div class="box">
-                    
+
                     <div id="container1">
-                        
+
                     </div>
                     <div style="margin-left: 40px; margin-right: 40px;"></div>
                     <div id="container2">
-                        
+
                     </div>
                 </div>
             </div>

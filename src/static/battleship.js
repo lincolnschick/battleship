@@ -1,6 +1,7 @@
 /*----------------------------------------------------------------------------------------------------------------*/
 //Global variables that are used throughout the game
 let numberOfShips = 0;
+let difficulty = -1;
 var game = null;
 let turnTracker = null;
 let miss_snd = new sound("./static/miss.mp3")
@@ -21,10 +22,32 @@ function sound(src) {
     this.sound.pause();
   }
 }
+
+function moveToAISelect(){
+    document.getElementById("startmenu").style.display = "none"
+    document.getElementById("aiselect").style.display = "block";
+}
+
+function moveToDifficultySelect(){
+    document.getElementById("aiselect").style.display = "none";
+    document.getElementById("difficultyselect").style.display = "block";
+    const difficultySelectButtons = document.querySelectorAll(".difficultyselectbutton");
+    for(let i=0; i<difficultySelectButtons.length; i++)
+    {
+        difficultySelectButtons[i].addEventListener('click', () => {
+            difficulty = i;
+            alert(difficulty); //delete later
+            moveToShipSelect();
+        });
+    }
+}
+
+
 /*----------------------------------------------------------------------------------------------------------------*/
 //First function that is called, simply is called when start is pressed
 function moveToShipSelect() {
-    document.getElementById("startmenu").style.display = "none";           //Hides and reveals the appropriate
+    document.getElementById("aiselect").style.display = "none";
+    document.getElementById("difficultyselect").style.display = "none";                                                                        //Hides and reveals the appropriate
     document.getElementById("shipselect").style.display = "block";         //Ids
     const shipSelectButtons = document.querySelectorAll(".shipselectbutton");
     for(let i = 0; i < shipSelectButtons.length; i++) {
@@ -39,9 +62,22 @@ function moveToShipSelect() {
 //Here buttons are made that call functions that determine player placement
 function moveToPlayerOnePlacementPrep() {
     document.getElementById("shipselect").style.display = "none";
+    document.getElementById("difficultyselect").style.display = "none";
     document.getElementById("shipprep").style.display = "block";
     document.getElementById("gobtn").addEventListener("click", moveToPlayerOnePlacement);
-    document.getElementById("placeshipsbtn").addEventListener("click", moveToPlayerTwoPlacementPrep);
+    if (difficulty == -1)
+    {
+        document.getElementById("placeshipsbtn").addEventListener("click", moveToPlayerTwoPlacementPrep);
+    }
+    if (difficulty == 0)
+    {
+        document.getElementById("placeshipsbtn").addEventListener("click", AIShipPlacement);
+    }
+   /* if (difficulty == 1)
+    {
+        document.getElementById("placeshipsbtn").addEventListener("click", moveToAIPlacement);  //need to implement ai random placement
+    }*/
+
 }
 
 //Goes to player one placement after creating the battleship class
@@ -60,7 +96,112 @@ function moveToPlayerTwoPlacementPrep() {
     document.getElementById("gobtn2").addEventListener("click", moveToPlayerTwoPlacement)
     document.getElementById("prepplayer").innerHTML = "Player 2";
 }
-
+/*----------------------------------------------------------------------------------------------------------------*/
+function AIShipPlacement()
+{
+    document.getElementById("shipplacement").style.display = "none";
+    document.getElementById("placeships").style.display = "none";
+    document.getElementById("shipprep").style.display = "block";
+    document.getElementById("gobtn").style.display = "none";
+    document.getElementById("gobtn2").style.display = "inline-block";
+    document.getElementById("gobtn2").addEventListener("click", moveToAiPlacement)
+    document.getElementById("prepplayer").innerHTML = "AI";
+}
+function moveToAiPlacement()
+{
+    let currBoard = 2;
+    game.isAiMode(currBoard);
+    //Iterate through ships
+    for(let i=1; i<=numberOfShips; i++)
+    {
+      //Globalizing the variables
+      let valid = false;
+      let row, column, direction;
+      //Won't continue until coordinates are valid for each ship
+      do
+      {
+        //gets randoms for the row and y coordinates
+        row = Math.floor(Math.random() * 10);
+        column = Math.floor(Math.random() * 10);
+        direction = Math.floor(Math.random() * 2);
+        //vertical
+        if(direction == 0)
+        {
+          //validates EACH coordinate to potentially be placed
+          for(let j=0; j<i; j++)
+          {
+            try
+            {
+              valid = game.isValidPlacement(currBoard,row+j, column);
+            }
+            catch(error)
+            { //If there is any error in checking placement, assume it is not valid
+              console.log(error + ": trying new coordinates")
+              valid = false;
+            }
+            finally
+            {
+              //break if not a valid placement to try new coordinates
+              if(valid==false)
+              {
+                break;
+              }
+            }
+          }
+        }
+        //horizontal
+        else if(direction = 1)
+        {
+          //validates EACH coordinate to potentially be placed
+          for(let j=0; j<i; j++)
+          {
+            try
+            {
+              valid = game.isValidPlacement(currBoard, row, column+j);
+            }
+            catch(error)
+            { //If there is any error in checking placement, assume it is not valid
+              console.log(error + ": trying new coordinates")
+              valid = false;
+            }
+            finally
+            {
+              //break if not a valid placement to try new coordinates
+              if(valid == false)
+              {
+                break;
+              }
+            }
+          }
+        }
+      }
+      while(valid == false)
+      //Iterate through each ships length to place on the board
+      for(let j=0; j<i; j++)
+      {
+        //Vertical placement
+        if(direction == 0)
+        {
+          //increments the y coordinate
+          game.placeShip(currBoard, row+j, column);
+        }
+        //Horizontal placement
+        else if(direction == 1)
+        {
+          //increment the row coordinate
+          game.placeShip(currBoard, row, column+j);
+        }
+      }
+    }
+   let test = game.board2.isValid(numberOfShips);
+   if(test)
+   {
+     document.getElementById("gobtn2").style.display = "none";
+     let start = document.getElementById("startgame")
+     start.style.display = "block";
+     start.addEventListener("click", gameRunner);
+   }
+}
 //Goes to player two placement after disabling board of player one
 function moveToPlayerTwoPlacement() {
     document.getElementById("gobtn2").style.display = "none";
@@ -304,6 +445,7 @@ function playerFire() {
 //Function that runs the whole game
 function gameRunner() {
     document.getElementById("placeships").style.display = "none";
+    document.getElementById("startgame").style.display = "none";
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
             let cell2 = document.getElementById(getId(2, i, j));
@@ -319,7 +461,7 @@ function gameRunner() {
 }
 
 /*----------------------------------------------------------------------------------------------------------------*/
-function statUpdater(player) {      //Function that updates statistics of the player 
+function statUpdater(player) {      //Function that updates statistics of the player
     if(player == 1)
     {
         let num = game.board2.hits/(game.board2.hits+game.board2.misses) * 100;
@@ -343,12 +485,11 @@ function statUpdater(player) {      //Function that updates statistics of the pl
         document.getElementById("misses").innerHTML = "Misses: " + game.board1.misses;
         if(game.board1.hits+game.board1.misses == 0)
         {
-            document.getElementById("accuracy").innerHTML = "Accuracy: 0%"         
+            document.getElementById("accuracy").innerHTML = "Accuracy: 0%"
         }
         else
         {
             document.getElementById("accuracy").innerHTML = "Accuracy: " +  (Math.round(num*100)/100).toFixed(2) + "%";
         }
     }
-
 }
