@@ -46,7 +46,7 @@ function moveToDifficultySelect(){
 /*----------------------------------------------------------------------------------------------------------------*/
 //First function that is called, simply is called when start is pressed
 function moveToShipSelect() {
-    document.getElementById("aiselect").style.display = "none";   
+    document.getElementById("aiselect").style.display = "none";
     document.getElementById("difficultyselect").style.display = "none";                                                                        //Hides and reveals the appropriate
     document.getElementById("shipselect").style.display = "block";         //Ids
     const shipSelectButtons = document.querySelectorAll(".shipselectbutton");
@@ -79,7 +79,7 @@ function moveToPlayerOnePlacementPrep() {
     {
         document.getElementById("placeshipsbtn").addEventListener("click", moveToAIPlacement);  //need to implement ai random placement
     }*/
-        
+
 }
 
 //Goes to player one placement after creating the battleship class
@@ -113,10 +113,66 @@ function AIShipPlacement()
 function AITester()
 {
     alert("IM PLACING SHIPS BOI");
+    //Iterate through ships
+    for(let i=1; i<=numberOfShips; i++)
+    {
+      //Won't continue until coordinates are valid for each ship
+      let valid = false;
+      let x, y, direction, currBoard;
+      do
+      {
+        x = Math.floor(Math.random() * 10);
+        y = Math.floor(Math.random() * 10);
+        direction = Math.floor(Math.random() * 2);
+        currBoard = 2;
+        //vertical
+        if(direction == 0)
+        {
+          for(let j=0; j<i; j++)
+          {
+            valid = game.isValidPlacement(currBoard, x, y+j);
+            if(valid == false)
+            {
+              break;
+            }
+          }
+        }
+        //horizontal
+        else if(direction = 1)
+        {
+          for(let j=0; j<i; j++)
+          {
+            valid = game.isValidPlacement(currBoard, x+j, y);
+            if(valid == false)
+            {
+              break;
+            }
+          }
+        }
+      }
+      while(valid == false)
+      //Iterate through each ships length
+      alert("Placing ship at x: " + x + " y: " + y + " direction: " + direction);
+      for(let j=0; j<i; j++)
+      {
+        //Vertical placement
+        if(direction == 0)
+        {
+          game.placeShip(currBoard, x, y+j);
+        }
+        //Horizontal placement
+        else if(direction == 1)
+        {
+          game.placeShip(currBoard, x+j, y);
+        }
+      }
+
+    }
+    /*
 	if(numberOfShips==1)
     {
         let x = Math.floor(Math.random() * 10);
-        let y = Math.floor(Math.random() * 10); 
+        let y = Math.floor(Math.random() * 10);
         alert("x is "+x+" y is "+y+" dir is "+direction);
         let currBoard = 2;
         game.placeShip(currBoard, x, y)
@@ -126,7 +182,7 @@ function AITester()
     for (let i=0; i<numberOfShips; i++)
     {
         let x = Math.floor(Math.random() * 10);
-        let y = Math.floor(Math.random() * 10); 
+        let y = Math.floor(Math.random() * 10);
         let direction = Math.floor(Math.random() * 2);  //direction 0 = vertical    1 = horizontal
         alert("x is "+x+" y is "+y+" dir is "+direction);
         let currBoard = 2;
@@ -141,10 +197,10 @@ function AITester()
             if(numberOfShips>1)
             {
                 if(game.isValidPlacement(currBoard, x+ship-1, y) || game.isValidPlacement(currBoard, x, y+ship-1))
-                {    
+                {
                     game.placeShip(currBoard, x, y);
                     while(length!=ship)
-                    {  
+                    {
                         for(let j=0; j<length; j++)
                         {
                             if(direction==1)
@@ -169,10 +225,10 @@ function AITester()
             }
         }
     }
-
+    */
    let test = game.board2.isValid(numberOfShips);
    alert(test);
-     
+
 }
 //Goes to player two placement after disabling board of player one
 function moveToPlayerTwoPlacement() {
@@ -432,7 +488,7 @@ function gameRunner() {
 }
 
 /*----------------------------------------------------------------------------------------------------------------*/
-function statUpdater(player) {      //Function that updates statistics of the player 
+function statUpdater(player) {      //Function that updates statistics of the player
     if(player == 1)
     {
         let num = game.board2.hits/(game.board2.hits+game.board2.misses) * 100;
@@ -456,7 +512,7 @@ function statUpdater(player) {      //Function that updates statistics of the pl
         document.getElementById("misses").innerHTML = "Misses: " + game.board1.misses;
         if(game.board1.hits+game.board1.misses == 0)
         {
-            document.getElementById("accuracy").innerHTML = "Accuracy: 0%"         
+            document.getElementById("accuracy").innerHTML = "Accuracy: 0%"
         }
         else
         {
