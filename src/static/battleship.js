@@ -112,32 +112,46 @@ function AIShipPlacement()
 }
 function place_ai_ships()
 {
+    alert("Placing AI Ships")
+    let currBoard = 2;
+    game.isAiMode(currBoard);
     //Iterate through ships
     for(let i=1; i<=numberOfShips; i++)
     {
       //Globalizing the variables
       let valid = false;
-      let x, y, direction, currBoard;
+      let row, column, direction;
       //Won't continue until coordinates are valid for each ship
       do
       {
-        //gets randoms for the x and y coordinates
-        x = Math.floor(Math.random() * 10);
-        y = Math.floor(Math.random() * 10);
+        //gets randoms for the row and y coordinates
+        row = Math.floor(Math.random() * 10);
+        column = Math.floor(Math.random() * 10);
         direction = Math.floor(Math.random() * 2);
-        currBoard = 2;
         //vertical
         if(direction == 0)
         {
           //validates EACH coordinate to potentially be placed
           for(let j=0; j<i; j++)
           {
-            valid = game.isValidPlacement(currBoard, x, y+j);
-            //If any placement is invalid, break
-            if(valid == false)
+            try
             {
-              break;
+              valid = game.isValidPlacement(currBoard,row+j, column);
             }
+            catch(error)
+            {
+              console.log("caught");
+              console.log(error);
+              valid = false;
+            }
+            finally
+            {
+              if(valid==false)
+              {
+                break;
+              }
+            }
+            console.log("Checking ship: "+i+" index: "+j);
           }
         }
         //horizontal
@@ -146,34 +160,49 @@ function place_ai_ships()
           //validates EACH coordinate to potentially be placed
           for(let j=0; j<i; j++)
           {
-            valid = game.isValidPlacement(currBoard, x+j, y);
-            //If any placement is invalid, break
-            if(valid == false)
-            {
-              break;
-            }
+              try
+              {
+                valid = game.isValidPlacement(currBoard, row, column+j);
+              }
+              catch(error)
+              {
+                console.log(error);
+                valid = false;
+              }
+              finally
+              {
+                if(valid == false)
+                {
+                  break;
+                }
+              }
+              console.log("Checking ship: "+i+" index: "+j);
+              //If any placement is invalid, break
           }
         }
       }
       while(valid == false)
       //Iterate through each ships length to place on the board
+      console.log("Column: "+column+" row: "+row+" direction: "+direction+" length: "+i);
       for(let j=0; j<i; j++)
       {
         //Vertical placement
         if(direction == 0)
         {
           //increments the y coordinate
-          game.placeShip(currBoard, x, y+j);
+          game.placeShip(currBoard, row+j, column);
         }
         //Horizontal placement
         else if(direction == 1)
         {
-          //increment the x coordinate
-          game.placeShip(currBoard, x+j, y);
+          //increment the row coordinate
+          game.placeShip(currBoard, row, column+j);
         }
       }
     }
+    game.printBoard(2);
    let test = game.board2.isValid(numberOfShips);
+   alert(test);
 }
 //Goes to player two placement after disabling board of player one
 function moveToPlayerTwoPlacement() {
