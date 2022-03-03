@@ -113,6 +113,65 @@ function AIShipPlacement()
 function AITester()
 {
     alert("IM PLACING SHIPS BOI");
+	if(numberOfShips==1)
+    {
+        let x = Math.floor(Math.random() * 10);
+        let y = Math.floor(Math.random() * 10); 
+        alert("x is "+x+" y is "+y+" dir is "+direction);
+        let currBoard = 2;
+        game.placeShip(currBoard, x, y)
+    }
+
+    let ship=2;
+    for (let i=0; i<numberOfShips; i++)
+    {
+        let x = Math.floor(Math.random() * 10);
+        let y = Math.floor(Math.random() * 10); 
+        let direction = Math.floor(Math.random() * 2);  //direction 0 = vertical    1 = horizontal
+        alert("x is "+x+" y is "+y+" dir is "+direction);
+        let currBoard = 2;
+        let length = 1;
+        if(i==0)
+        {
+            game.placeShip(currBoard, x, y);
+        }
+        if(i>0)
+        {
+            game.placeShip(currBoard, x, y);
+            if(numberOfShips>1)
+            {
+                if(game.isValidPlacement(currBoard, x+ship-1, y) || game.isValidPlacement(currBoard, x, y+ship-1))
+                {    
+                    game.placeShip(currBoard, x, y);
+                    while(length!=ship)
+                    {  
+                        for(let j=0; j<length; j++)
+                        {
+                            if(direction==1)
+                            {
+                                game.placeShip(currBoard, x+length, y);
+                                alert("x is "+(x+length)+" y is "+y);
+                            }
+                            if(direction==0)
+                            {
+                                game.placeShip(currBoard, x, y+length);
+                                alert("x is "+x+" y is "+(y+length));
+                            }
+                        }
+                        length++;
+                    }
+                    ship++;
+                }
+                else
+                {
+                    alert(i+" Starting loop over");   //If ship will not fit, the loop runs again
+                }
+            }
+        }
+    }
+
+   let test = game.board2.isValid(numberOfShips);
+   alert(test);
      
 }
 //Goes to player two placement after disabling board of player one
