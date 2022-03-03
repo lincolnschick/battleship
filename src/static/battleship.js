@@ -291,7 +291,7 @@ function determineShips() {
 function loadBoards(player) {
     const opponent = player == 1 ? 2 : 1;
     const playerBoard = game.getBoard(player);
-    const opponentBoard = game.getBoard(opponent, hidden=false);
+    const opponentBoard = game.getBoard(opponent, hidden=true);
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
             let playerCell = document.getElementById(getId(player, i, j));
