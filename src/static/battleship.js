@@ -107,20 +107,22 @@ function AIShipPlacement()
     document.getElementById("shipprep").style.display = "block";
     document.getElementById("gobtn").style.display = "none";
     document.getElementById("gobtn2").style.display = "inline-block";
-    document.getElementById("gobtn2").addEventListener("click", AITester)
+    document.getElementById("gobtn2").addEventListener("click", place_ai_ships)
     document.getElementById("prepplayer").innerHTML = "AI";
 }
-function AITester()
+function place_ai_ships()
 {
     alert("IM PLACING SHIPS BOI");
     //Iterate through ships
     for(let i=1; i<=numberOfShips; i++)
     {
-      //Won't continue until coordinates are valid for each ship
+      //Globalizing the variables
       let valid = false;
       let x, y, direction, currBoard;
+      //Won't continue until coordinates are valid for each ship
       do
       {
+        //gets randoms for the x and y coordinates
         x = Math.floor(Math.random() * 10);
         y = Math.floor(Math.random() * 10);
         direction = Math.floor(Math.random() * 2);
@@ -128,9 +130,11 @@ function AITester()
         //vertical
         if(direction == 0)
         {
+          //validates EACH coordinate to potentially be placed
           for(let j=0; j<i; j++)
           {
             valid = game.isValidPlacement(currBoard, x, y+j);
+            //If any placement is invalid, break
             if(valid == false)
             {
               break;
@@ -140,9 +144,11 @@ function AITester()
         //horizontal
         else if(direction = 1)
         {
+          //validates EACH coordinate to potentially be placed
           for(let j=0; j<i; j++)
           {
             valid = game.isValidPlacement(currBoard, x+j, y);
+            //If any placement is invalid, break
             if(valid == false)
             {
               break;
@@ -151,84 +157,25 @@ function AITester()
         }
       }
       while(valid == false)
-      //Iterate through each ships length
-      alert("Placing ship at x: " + x + " y: " + y + " direction: " + direction);
+      //Iterate through each ships length to place on the board
       for(let j=0; j<i; j++)
       {
         //Vertical placement
         if(direction == 0)
         {
+          //increments the y coordinate
           game.placeShip(currBoard, x, y+j);
         }
         //Horizontal placement
         else if(direction == 1)
         {
+          //increment the x coordinate
           game.placeShip(currBoard, x+j, y);
         }
       }
-
     }
-    /*
-	if(numberOfShips==1)
-    {
-        let x = Math.floor(Math.random() * 10);
-        let y = Math.floor(Math.random() * 10);
-        alert("x is "+x+" y is "+y+" dir is "+direction);
-        let currBoard = 2;
-        game.placeShip(currBoard, x, y)
-    }
-
-    let ship=2;
-    for (let i=0; i<numberOfShips; i++)
-    {
-        let x = Math.floor(Math.random() * 10);
-        let y = Math.floor(Math.random() * 10);
-        let direction = Math.floor(Math.random() * 2);  //direction 0 = vertical    1 = horizontal
-        alert("x is "+x+" y is "+y+" dir is "+direction);
-        let currBoard = 2;
-        let length = 1;
-        if(i==0)
-        {
-            game.placeShip(currBoard, x, y);
-        }
-        if(i>0)
-        {
-            game.placeShip(currBoard, x, y);
-            if(numberOfShips>1)
-            {
-                if(game.isValidPlacement(currBoard, x+ship-1, y) || game.isValidPlacement(currBoard, x, y+ship-1))
-                {
-                    game.placeShip(currBoard, x, y);
-                    while(length!=ship)
-                    {
-                        for(let j=0; j<length; j++)
-                        {
-                            if(direction==1)
-                            {
-                                game.placeShip(currBoard, x+length, y);
-                                alert("x is "+(x+length)+" y is "+y);
-                            }
-                            if(direction==0)
-                            {
-                                game.placeShip(currBoard, x, y+length);
-                                alert("x is "+x+" y is "+(y+length));
-                            }
-                        }
-                        length++;
-                    }
-                    ship++;
-                }
-                else
-                {
-                    alert(i+" Starting loop over");   //If ship will not fit, the loop runs again
-                }
-            }
-        }
-    }
-    */
    let test = game.board2.isValid(numberOfShips);
    alert(test);
-
 }
 //Goes to player two placement after disabling board of player one
 function moveToPlayerTwoPlacement() {
