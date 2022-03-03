@@ -67,12 +67,10 @@ function moveToPlayerOnePlacementPrep() {
     document.getElementById("gobtn").addEventListener("click", moveToPlayerOnePlacement);
     if (difficulty == -1)
     {
-        alert("regular game");
         document.getElementById("placeshipsbtn").addEventListener("click", moveToPlayerTwoPlacementPrep);
     }
     if (difficulty == 0)
     {
-        alert("Move onto AI mans");
         document.getElementById("placeshipsbtn").addEventListener("click", AIShipPlacement);
     }
    /* if (difficulty == 1)
@@ -101,18 +99,16 @@ function moveToPlayerTwoPlacementPrep() {
 /*----------------------------------------------------------------------------------------------------------------*/
 function AIShipPlacement()
 {
-    alert("Hello I am AI.");
     document.getElementById("shipplacement").style.display = "none";
     document.getElementById("placeships").style.display = "none";
     document.getElementById("shipprep").style.display = "block";
     document.getElementById("gobtn").style.display = "none";
     document.getElementById("gobtn2").style.display = "inline-block";
-    document.getElementById("gobtn2").addEventListener("click", place_ai_ships)
+    document.getElementById("gobtn2").addEventListener("click", moveToAiPlacement)
     document.getElementById("prepplayer").innerHTML = "AI";
 }
-function place_ai_ships()
+function moveToAiPlacement()
 {
-    alert("Placing AI Ships")
     let currBoard = 2;
     game.isAiMode(currBoard);
     //Iterate through ships
@@ -139,19 +135,18 @@ function place_ai_ships()
               valid = game.isValidPlacement(currBoard,row+j, column);
             }
             catch(error)
-            {
-              console.log("caught");
-              console.log(error);
+            { //If there is any error in checking placement, assume it is not valid
+              console.log(error + ": trying new coordinates")
               valid = false;
             }
             finally
             {
+              //break if not a valid placement to try new coordinates
               if(valid==false)
               {
                 break;
               }
             }
-            console.log("Checking ship: "+i+" index: "+j);
           }
         }
         //horizontal
@@ -160,30 +155,28 @@ function place_ai_ships()
           //validates EACH coordinate to potentially be placed
           for(let j=0; j<i; j++)
           {
-              try
+            try
+            {
+              valid = game.isValidPlacement(currBoard, row, column+j);
+            }
+            catch(error)
+            { //If there is any error in checking placement, assume it is not valid
+              console.log(error + ": trying new coordinates")
+              valid = false;
+            }
+            finally
+            {
+              //break if not a valid placement to try new coordinates
+              if(valid == false)
               {
-                valid = game.isValidPlacement(currBoard, row, column+j);
+                break;
               }
-              catch(error)
-              {
-                console.log(error);
-                valid = false;
-              }
-              finally
-              {
-                if(valid == false)
-                {
-                  break;
-                }
-              }
-              console.log("Checking ship: "+i+" index: "+j);
-              //If any placement is invalid, break
+            }
           }
         }
       }
       while(valid == false)
       //Iterate through each ships length to place on the board
-      console.log("Column: "+column+" row: "+row+" direction: "+direction+" length: "+i);
       for(let j=0; j<i; j++)
       {
         //Vertical placement
@@ -200,9 +193,14 @@ function place_ai_ships()
         }
       }
     }
-    game.printBoard(2);
    let test = game.board2.isValid(numberOfShips);
-   alert(test);
+   if(test)
+   {
+     document.getElementById("gobtn2").style.display = "none";
+     let start = document.getElementById("startgame")
+     start.style.display = "block";
+     start.addEventListener("click", gameRunner);
+   }
 }
 //Goes to player two placement after disabling board of player one
 function moveToPlayerTwoPlacement() {
@@ -447,6 +445,7 @@ function playerFire() {
 //Function that runs the whole game
 function gameRunner() {
     document.getElementById("placeships").style.display = "none";
+    document.getElementById("startgame").style.display = "none";
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
             let cell2 = document.getElementById(getId(2, i, j));
