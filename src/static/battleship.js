@@ -112,7 +112,6 @@ function AIShipPlacement()
 }
 function place_ai_ships()
 {
-    alert("IM PLACING SHIPS BOI");
     //Iterate through ships
     for(let i=1; i<=numberOfShips; i++)
     {
@@ -175,7 +174,6 @@ function place_ai_ships()
       }
     }
    let test = game.board2.isValid(numberOfShips);
-   alert(test);
 }
 //Goes to player two placement after disabling board of player one
 function moveToPlayerTwoPlacement() {
