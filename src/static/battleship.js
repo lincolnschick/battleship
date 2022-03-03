@@ -65,19 +65,16 @@ function moveToPlayerOnePlacementPrep() {
     document.getElementById("difficultyselect").style.display = "none";
     document.getElementById("shipprep").style.display = "block";
     document.getElementById("gobtn").addEventListener("click", moveToPlayerOnePlacement);
+    //Defaulted in global variables, -1 for normal game
     if (difficulty == -1)
     {
         document.getElementById("placeshipsbtn").addEventListener("click", moveToPlayerTwoPlacementPrep);
     }
-    if (difficulty == 0)
+    //difficulty set in moveToDifficultySelect 0 easy, 1 medium, 2 hard
+    else
     {
-        document.getElementById("placeshipsbtn").addEventListener("click", AIShipPlacement);
+        document.getElementById("placeshipsbtn").addEventListener("click", moveToAIPlacement);
     }
-   /* if (difficulty == 1)
-    {
-        document.getElementById("placeshipsbtn").addEventListener("click", moveToAIPlacement);  //need to implement ai random placement
-    }*/
-
 }
 
 //Goes to player one placement after creating the battleship class
@@ -97,17 +94,17 @@ function moveToPlayerTwoPlacementPrep() {
     document.getElementById("prepplayer").innerHTML = "Player 2";
 }
 /*----------------------------------------------------------------------------------------------------------------*/
-function AIShipPlacement()
+function moveToAIPlacement()
 {
     document.getElementById("shipplacement").style.display = "none";
     document.getElementById("placeships").style.display = "none";
     document.getElementById("shipprep").style.display = "block";
     document.getElementById("gobtn").style.display = "none";
     document.getElementById("gobtn2").style.display = "inline-block";
-    document.getElementById("gobtn2").addEventListener("click", moveToAiPlacement)
+    document.getElementById("gobtn2").addEventListener("click", AiPlacement)
     document.getElementById("prepplayer").innerHTML = "AI";
 }
-function moveToAiPlacement()
+function AiPlacement()
 {
     let currBoard = 2;
     game.isAiMode(currBoard);
