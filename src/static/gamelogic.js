@@ -12,7 +12,16 @@ class GameBoard {
         this.cols = 10;
         this.hits = 0;
         this.misses = 0;
+        this.isAi = false;
         this.board = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
+    }
+    /**
+      @private
+      @param {boolean} isAi
+    **/
+    _isAi(isAi)
+    {
+      this.isAi = isAi;
     }
     /**
      * @private
@@ -91,22 +100,46 @@ class GameBoard {
     }
 
     isValidPlacement(row, col, numShips) {
+        /*
+          AI only checks as it cannot do these intuition-based checks
+            - click off the board
+            - overal ships
+            - place end to end
+        */
+        if(this.isAi)
+        {
+          //check for overflow
+          if(row > 9 || row < 0 || col > 9 || col < 0)
+          {
+            return false;
+          }
+          //Check for current index - also for AI
+          else if(this.board[row][col] == 1)
+          {
+            return false;
+          }
+          //Check for ships placed end to end
+          else if((row-1 < 10 && this.board[row-1][col] == 1) || (col-1 < 10 && this.board[row][col-1]))
+          {
+            return false;
+          }
+        }
         //Check diagonals
         if (row + 1 < 10 && col + 1 < 10 && this.board[row + 1][col + 1] == 1) {
             return false;
         }
-        if (row - 1 >= 0 && col - 1 >= 0 && this.board[row - 1][col - 1] == 1) {
+        else if (row - 1 >= 0 && col - 1 >= 0 && this.board[row - 1][col - 1] == 1) {
             return false;
         }
-        if (row - 1 >= 0 && col + 1 < 10 && this.board[row - 1][col + 1] == 1) {
+        else if (row - 1 >= 0 && col + 1 < 10 && this.board[row - 1][col + 1] == 1) {
             return false;
         }
-        if (row + 1 < 10 && col - 1 >= 0 && this.board[row + 1][col - 1] == 1) {
+        else if (row + 1 < 10 && col - 1 >= 0 && this.board[row + 1][col - 1] == 1) {
             return false;
         }
         //Check for filled squares in more than one direction
-        if ((row + 1 < 10 && this.board[row + 1][col] == 1 || row - 1 >= 0 && this.board[row - 1][col] == 1)) {
-            if (col + 1 < 10 && this.board[row][col + 1] == 1 || col - 1 >= 0 && this.board[row][col - 1] == 1) {
+        else if ((row + 1 < 10 && this.board[row + 1][col] == 1) || (row - 1 >= 0 && this.board[row - 1][col] == 1)) {
+            if ((col + 1 < 10 && this.board[row][col + 1] == 1) || (col - 1 >= 0 && this.board[row][col - 1] == 1)) {
                 return false;
             }
         }
@@ -212,6 +245,13 @@ class Battleship {
         //Calls appropriate isValid method for given board.
         return board == 1 ? this.board1.isValid(this.numShips) : this.board2.isValid(this.numShips);
     }
+    /*
+      * @param {number} board - 1 or 2
+    */
+    isAiMode(board)
+    {
+      board == 1 ? this.board1._isAi(true) : this.board2._isAi(true);
+    }
 
     /**
      * Calls appropriate board's isValidPlacement method
@@ -271,6 +311,7 @@ class Battleship {
                     console.log( this.board2.board[i][j]);
                 }
             }
+            console.log("\n");
         }
     }
 
