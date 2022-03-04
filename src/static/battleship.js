@@ -11,7 +11,7 @@ let hit_snd = new sound("./static/hit.mp3")
   * @param lastCol : integer 0-9
   * @param lastDir : integer 0 (up), 1 (right), 2 (down), 3 (left)
 **/
-let aiMedium = {lastRow: null, lastCol: null, lastDir: null}
+let aiMedium = {row: 0, col: 0, dir: 0, hit: false}
 /*----------------------------------------------------------------------------------------------------------------*/
 //Funcionality to play sounds
 function sound(src) {
@@ -403,13 +403,9 @@ function aiFire(difficulty)
   }
   else if(difficulty == 1)
   {
-    do
-    {
-      coords = _mediumDifficultyMove();
-      row = coords['row'];
-      col = coords['col'];
-    }
-    while(row > 9 || row < 0 || col > 9 || col < 0 || !(_isValidFire(row,col)))
+    coords = _mediumDifficultyMove(aiMedium);
+    row = coords['row'];
+    col = coords['col'];
   }
   else if(difficulty == 2)
   {
@@ -421,19 +417,20 @@ function aiFire(difficulty)
       if(game.firedAt(1,row,col))
       {
         hit_snd.play();
-        if(difficulty == 1)
-        {
-          aiMedium.lastRow = row;
-          aiMedium.lastCol = col;
-          //If first hit, assign 4
-          aiMedium.lastDir = (aiMedium.lastDir == null) ? 4 : aiMedium.lastDir;
-        }
+
+          aiMedium.hit = true;
+          aiMedium.row = row;
+          aiMedium.col = col;
+
       }
       else
       {
         miss_snd.play();
-        //reset to null if all directions checked or initial miss, increment if not
-        aiMedium.lastDir = (aiMedium.lastDir == 3 || aiMedium.lastDir == null) ? null : aiMedium.lastDir+1;
+        //Go to next direction if between 0 and 2
+        (aiMedium.hit == true && aiMedium.dir != 3) ? aiMedium.dir +=1 : null;
+        //Will restart cycling
+        //aiMedium.dir == 3 ? aiMedium.hit = false : null;
+        //aiMedium.dir == 3 ? aiMedium.dir = 0 : null;
       }
       //update logic
       fired = true;
@@ -458,7 +455,7 @@ function aiFire(difficulty)
 /**
   * @Return row and column coordinates
 **/
-function _mediumDifficultyMove()
+function _mediumDifficultyMove(move)
 {
   /*
     Helper function for aiFire to simplify medium branch instructions
@@ -468,43 +465,115 @@ function _mediumDifficultyMove()
 
       - utilizes aiMedium object declared globally in line 9
   */
-  //No recent direction, fire random
-  if(aiMedium.lastDir == null)
+  //recent move not a hit, random coordinates
+  if(move.hit == false)
   {
-    row = Math.floor(Math.random() * 10);
-    col = Math.floor(Math.random() * 10);
+    do
+    {
+      row = Math.floor(Math.random() * 10);
+      col = Math.floor(Math.random() * 10);
+    }
+    while(!(_isValidFire(row, col)));
+    return {'row': row, 'col': col};
   }
-  //New hit, start looking up
-  else if(aiMedium.lastDir == 4)
-  {
-    row = aiMedium.lastRow - 1;
-    col = aiMedium.lastCol;
-    aiMedium.lastDir = 0;
-  }
-  //Hit on last turn, keep moving
+  //recent move a hit, move orthoganally adjacent using recursion
   else
   {
-    //Last hit direction left or right
-    if(aiMedium.lastDir % 2)
+    //up
+    if(move.dir == 0)
     {
-      //Continue either left or right depending on last hit
-      col = (aiMedium.lastDir % 3) ? aiMedium.lastCol + 1 : aiMedium.lastCol - 1;
-      row = aiMedium.lastRow;
+      if(_isValidFire(move.row-1,move.col))
+      {
+        return {'row':move.row-1, 'col': move.col};
+      }
+      else
+      {
+        //failed up, check right
+      //  move.col += 1;
+        move.dir +=1;
+        return _mediumDifficultyMove(move);
+      }
     }
-    //Last hit up or down
-    else
+    //right
+    else if(move.dir == 1)
     {
-      //Continue either up or down depending on last hit
-      row = (aiMedium.lastDir == 2) ? aiMedium.lastRow + 1 : aiMedium.lastRow - 1;
-      col = aiMedium.lastCol;
+      if(_isValidFire(move.row,move.col+1))
+      {
+        return {'row':move.row, 'col': move.col+1};
+      }
+      else
+      {
+        //failed right, check down
+      //  move.row += 1;
+        move.dir +=1;
+        return _mediumDifficultyMove(move);
+      }
     }
-  }
-  return {
-    'row' : row,
-    'col' : col
+    //down
+    else if(move.dir == 2)
+    {
+      if(_isValidFire(move.row+1,move.col))
+      {
+        return {'row':move.row+1, 'col': move.col};
+      }
+      else
+      {
+        //failed down, check left
+      //  move.col -= 1;
+        move.dir +=1;
+        return _mediumDifficultyMove(move);
+      }
+    }
+    //left
+    else if(move.dir == 3)
+    {
+      if(_isValidFire(move.row,move.col-1))
+      {
+        return {'row':move.row, 'col': move.col-1};
+      }
+      else
+      {
+        //backtrack if cell to the left or below is hit (not sunk or empty)
+        if(_isHit(move.row,move.col-1))
+        {
+          move.col -= 1;
+          move.dir = 3;
+        }
+        else if(_isHit(move.row+1, move.col))
+        {
+          move.row += 1;
+          move.dir = 2;
+        }
+        else
+        {
+          move.hit = false;
+          move.dir = 0;
+        }
+        return _mediumDifficultyMove(move);
+      }
+    }
   }
 }
-
+/**
+  * @param row row to check
+  * @param col column to check
+**/
+function _isHit(row, col)
+{
+  const aiBoard = game.getBoard(1,hidden=true);
+    if(row > 9 || row < 0 || col > 9 || col < 0)
+    {
+      return false;
+    }
+    else if(aiBoard[row][col] == -2)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+}
 /**
   * @param row row to check
   * @param col column to check
@@ -514,7 +583,11 @@ function _isValidFire(row,col)
   const aiBoard = game.getBoard(1, hidden=true);
   try
   {
-    if(aiBoard[row][col] == -2 || aiBoard[row][col] == -3)
+    if(row < 0 || row > 9 || col < 0 || col > 9)
+    {
+      return false;
+    }
+    else if(aiBoard[row][col] == -1 || aiBoard[row][col] == -2 || aiBoard[row][col] == -3)
     {
       return false;
     }
