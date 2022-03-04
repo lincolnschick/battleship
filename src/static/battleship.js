@@ -384,6 +384,13 @@ function fire() {
 function aiFire(difficulty)
 {
   alert("ai firing with: " + difficulty + "difficulty");
+  //deactivates clicking on the player's board while AI is firing
+  for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+          let aiBoard = document.getElementById(getId(1, i, j));
+          aiBoard.style.pointerEvents = 'none';
+      }
+  }
 }
 
 //Preps the players for firing
