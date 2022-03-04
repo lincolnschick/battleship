@@ -19,9 +19,17 @@ class GameBoard {
       @private
       @param {boolean} isAi
     **/
-    _isAi(isAi)
+    _setAi(isAi)
     {
       this.isAi = isAi;
+    }
+    /**
+      @private
+      @return boolean
+    **/
+    _isAi()
+    {
+      return this.isAi;
     }
     /**
      * @private
@@ -245,12 +253,19 @@ class Battleship {
         //Calls appropriate isValid method for given board.
         return board == 1 ? this.board1.isValid(this.numShips) : this.board2.isValid(this.numShips);
     }
-    /*
+    /**
       * @param {number} board - 1 or 2
-    */
-    isAiMode(board)
+    **/
+    setAiMode(board)
     {
-      board == 1 ? this.board1._isAi(true) : this.board2._isAi(true);
+      board == 1 ? this.board1._setAi(true) : this.board2._setAi(true);
+    }
+    /**
+      #* return boolean
+    **/
+    isAiGame(board)
+    {
+      return board == 1 ? this.board1._isAi() : this.board2._isAi();
     }
 
     /**

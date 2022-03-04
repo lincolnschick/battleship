@@ -6,6 +6,12 @@ var game = null;
 let turnTracker = null;
 let miss_snd = new sound("./static/miss.mp3")
 let hit_snd = new sound("./static/hit.mp3")
+/**
+  * @param lastRow : integer 0-9
+  * @param lastCol : integer 0-9
+  * @param lastDir : integer 0 (up), 1 (right), 2 (down), 3 (left)
+**/
+let aiMedium = {row: 0, col: 0, dir: 0, hit: false}
 /*----------------------------------------------------------------------------------------------------------------*/
 //Funcionality to play sounds
 function sound(src) {
@@ -36,7 +42,6 @@ function moveToDifficultySelect(){
     {
         difficultySelectButtons[i].addEventListener('click', () => {
             difficulty = i;
-            alert(difficulty); //delete later
             moveToShipSelect();
         });
     }
@@ -107,7 +112,7 @@ function moveToAIPlacement()
 function AiPlacement()
 {
     let currBoard = 2;
-    game.isAiMode(currBoard);
+    game.setAiMode(currBoard);
     //Iterate through ships
     for(let i=1; i<=numberOfShips; i++)
     {
@@ -381,6 +386,220 @@ function fire() {
     }
 }
 
+function aiFire(difficulty)
+{
+  let row, col;
+  //deactivates clicking on the player's board while AI is firing
+  for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+          let aiBoard = document.getElementById(getId(1, i, j));
+          aiBoard.style.pointerEvents = 'none';
+      }
+  }
+  if(difficulty == 0)
+  {
+    row = Math.floor(Math.random() * 10);
+    col = Math.floor(Math.random() * 10);
+  }
+  else if(difficulty == 1)
+  {
+    coords = _mediumDifficultyMove(aiMedium);
+    row = coords['row'];
+    col = coords['col'];
+  }
+  else if(difficulty == 2)
+  {
+    alert("HARD");
+  }
+  //only fire once a turn
+  if (!fired) {
+      //fires and plays a sound depending on fire success
+      if(game.firedAt(1,row,col))
+      {
+        hit_snd.play();
+
+          aiMedium.hit = true;
+          aiMedium.row = row;
+          aiMedium.col = col;
+
+      }
+      else
+      {
+        miss_snd.play();
+        //Go to next direction if between 0 and 2
+        (aiMedium.hit == true && aiMedium.dir != 3) ? aiMedium.dir +=1 : null;
+        //Will restart cycling
+        //aiMedium.dir == 3 ? aiMedium.hit = false : null;
+        //aiMedium.dir == 3 ? aiMedium.dir = 0 : null;
+      }
+      //update logic
+      fired = true;
+      //update boards
+      loadBoards(turnTracker.getTurn());
+      //disable click feature on the cell
+      this.removeEventListener("click", fire);
+  }
+  //show button to continue
+  document.getElementById("endTurn").style.display = "block";
+  document.getElementById("endTurnBtn").addEventListener("click", playerFirePrep);
+  if(turnTracker.getTurn() == 1)      //updates when user fires
+  {
+      statUpdater(1);
+  }
+  if(turnTracker.getTurn() == 2)
+  {
+      statUpdater(2);
+  }
+}
+
+/**
+  * @Return row and column coordinates
+**/
+function _mediumDifficultyMove(move)
+{
+  /*
+    Helper function for aiFire to simplify medium branch instructions
+      - Fires at random until a ship is hit, then
+      - Searches orthogonally adjacent for subsequent fires, and
+      - If all directions are checked, start firing at random again
+
+      - utilizes aiMedium object declared globally in line 9
+  */
+  //recent move not a hit, random coordinates
+  if(move.hit == false)
+  {
+    do
+    {
+      row = Math.floor(Math.random() * 10);
+      col = Math.floor(Math.random() * 10);
+    }
+    while(!(_isValidFire(row, col)));
+    return {'row': row, 'col': col};
+  }
+  //recent move a hit, move orthoganally adjacent using recursion
+  else
+  {
+    //up
+    if(move.dir == 0)
+    {
+      if(_isValidFire(move.row-1,move.col))
+      {
+        return {'row':move.row-1, 'col': move.col};
+      }
+      else
+      {
+        //failed up, check right
+      //  move.col += 1;
+        move.dir +=1;
+        return _mediumDifficultyMove(move);
+      }
+    }
+    //right
+    else if(move.dir == 1)
+    {
+      if(_isValidFire(move.row,move.col+1))
+      {
+        return {'row':move.row, 'col': move.col+1};
+      }
+      else
+      {
+        //failed right, check down
+      //  move.row += 1;
+        move.dir +=1;
+        return _mediumDifficultyMove(move);
+      }
+    }
+    //down
+    else if(move.dir == 2)
+    {
+      if(_isValidFire(move.row+1,move.col))
+      {
+        return {'row':move.row+1, 'col': move.col};
+      }
+      else
+      {
+        //failed down, check left
+      //  move.col -= 1;
+        move.dir +=1;
+        return _mediumDifficultyMove(move);
+      }
+    }
+    //left
+    else if(move.dir == 3)
+    {
+      if(_isValidFire(move.row,move.col-1))
+      {
+        return {'row':move.row, 'col': move.col-1};
+      }
+      else
+      {
+        //backtrack if cell to the left or below is hit (not sunk or empty)
+        if(_isHit(move.row,move.col-1))
+        {
+          move.col -= 1;
+          move.dir = 3;
+        }
+        else if(_isHit(move.row+1, move.col))
+        {
+          move.row += 1;
+          move.dir = 2;
+        }
+        else
+        {
+          move.hit = false;
+          move.dir = 0;
+        }
+        return _mediumDifficultyMove(move);
+      }
+    }
+  }
+}
+/**
+  * @param row row to check
+  * @param col column to check
+**/
+function _isHit(row, col)
+{
+  const aiBoard = game.getBoard(1,hidden=true);
+    if(row > 9 || row < 0 || col > 9 || col < 0)
+    {
+      return false;
+    }
+    else if(aiBoard[row][col] == -2)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+}
+/**
+  * @param row row to check
+  * @param col column to check
+**/
+function _isValidFire(row,col)
+{
+  const aiBoard = game.getBoard(1, hidden=true);
+  try
+  {
+    if(row < 0 || row > 9 || col < 0 || col > 9)
+    {
+      return false;
+    }
+    else if(aiBoard[row][col] == -1 || aiBoard[row][col] == -2 || aiBoard[row][col] == -3)
+    {
+      return false;
+    }
+  }
+  catch(error)
+  {
+    console.log(error + " : AI trying new firing coordinates")
+    return false;
+  }
+  return true;
+}
+
 //Preps the players for firing
 function playerFirePrep() {
     if (game.isGameOver()) {
@@ -427,6 +646,11 @@ function playerFire() {
             cellP.style.pointerEvents = 'none';
             cellO.style.pointerEvents = 'auto';
         }
+    }
+    //Detect if the AI needs to fire or not
+    if(player == 2 && game.isAiGame(2))
+    {
+      aiFire(difficulty);
     }
     if(turnTracker.getTurn() == 1)          //Updates stats depending on which player's turn it is, updates when user clicks square to fire
     {
