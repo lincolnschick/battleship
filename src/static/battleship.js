@@ -6,6 +6,7 @@ var game = null;
 let turnTracker = null;
 let miss_snd = new sound("./static/miss.mp3")
 let hit_snd = new sound("./static/hit.mp3")
+let aiMediumData = {lastRow: null, lastCol: null, lastDir: ""}
 /*----------------------------------------------------------------------------------------------------------------*/
 //Funcionality to play sounds
 function sound(src) {
@@ -394,14 +395,62 @@ function aiFire(difficulty)
   if(difficulty == 0)
   {
     alert("EASY");
+    row = Math.floor(Math.random() * 10);
+    col = Math.floor(Math.random() * 10);
   }
   else if(difficulty == 1)
   {
+    /*
+      - Fires at random until a ship is hit, then
+      - Searches orthogonally adjacent for subsequent fires, and
+      - If all directions are checked, start firing at random again
+
+      - utilizes aiMediumData object declared globally in line 9
+    */
     alert("MEDIUM");
+    //No recent direction, fire random
+    /*if(aiMediumData.lastDir == "")
+    {
+      row = Math.floor(Math.random() * 10);
+      column = Math.floor(Math.random() * 10);
+    }
+    else
+    {
+      alert("not random")
+    }*/
   }
   else if(difficulty == 2)
   {
     alert("HARD");
+  }
+  //only fire once a turn
+  if (!fired) {
+      //fires and plays a sound depending on fire success
+      if(game.firedAt(1,row,col))
+      {
+        hit_snd.play();
+      }
+      else
+      {
+        miss_snd.play();
+      }
+      //update logic
+      fired = true;
+      //update boards
+      loadBoards(turnTracker.getTurn());
+      //disable click feature on the cell
+      this.removeEventListener("click", fire);
+  }
+  //show button to continue
+  document.getElementById("endTurn").style.display = "block";
+  document.getElementById("endTurnBtn").addEventListener("click", playerFirePrep);
+  if(turnTracker.getTurn() == 1)      //updates when user fires
+  {
+      statUpdater(1);
+  }
+  if(turnTracker.getTurn() == 2)
+  {
+      statUpdater(2);
   }
 }
 
