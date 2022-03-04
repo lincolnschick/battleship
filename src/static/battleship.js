@@ -391,6 +391,18 @@ function aiFire(difficulty)
           aiBoard.style.pointerEvents = 'none';
       }
   }
+  if(difficulty == 0)
+  {
+    alert("EASY");
+  }
+  else if(difficulty == 1)
+  {
+    alert("MEDIUM");
+  }
+  else if(difficulty == 2)
+  {
+    alert("HARD");
+  }
 }
 
 //Preps the players for firing
