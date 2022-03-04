@@ -6,7 +6,12 @@ var game = null;
 let turnTracker = null;
 let miss_snd = new sound("./static/miss.mp3")
 let hit_snd = new sound("./static/hit.mp3")
-let aiMediumData = {lastRow: null, lastCol: null, lastDir: ""}
+/**
+  * @param lastRow : integer 0-9
+  * @param lastCol : integer 0-9
+  * @param lastDir : integer 0 (up), 1 (right), 2 (down), 3 (left)
+**/
+let aiMedium = {lastRow: null, lastCol: null, lastDir: null}
 /*----------------------------------------------------------------------------------------------------------------*/
 //Funcionality to play sounds
 function sound(src) {
@@ -37,7 +42,6 @@ function moveToDifficultySelect(){
     {
         difficultySelectButtons[i].addEventListener('click', () => {
             difficulty = i;
-            alert(difficulty); //delete later
             moveToShipSelect();
         });
     }
@@ -384,7 +388,7 @@ function fire() {
 
 function aiFire(difficulty)
 {
-  alert("ai firing with: " + difficulty + "difficulty");
+  let row, col;
   //deactivates clicking on the player's board while AI is firing
   for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
@@ -394,30 +398,18 @@ function aiFire(difficulty)
   }
   if(difficulty == 0)
   {
-    alert("EASY");
     row = Math.floor(Math.random() * 10);
     col = Math.floor(Math.random() * 10);
   }
   else if(difficulty == 1)
   {
-    /*
-      - Fires at random until a ship is hit, then
-      - Searches orthogonally adjacent for subsequent fires, and
-      - If all directions are checked, start firing at random again
-
-      - utilizes aiMediumData object declared globally in line 9
-    */
-    alert("MEDIUM");
-    //No recent direction, fire random
-    /*if(aiMediumData.lastDir == "")
+    do
     {
-      row = Math.floor(Math.random() * 10);
-      column = Math.floor(Math.random() * 10);
+      coords = _mediumDifficultyMove();
+      row = coords['row'];
+      col = coords['col'];
     }
-    else
-    {
-      alert("not random")
-    }*/
+    while(row > 9 || row < 0 || col > 9 || col < 0 || !(_isValidFire(row,col)))
   }
   else if(difficulty == 2)
   {
@@ -429,10 +421,19 @@ function aiFire(difficulty)
       if(game.firedAt(1,row,col))
       {
         hit_snd.play();
+        if(difficulty == 1)
+        {
+          aiMedium.lastRow = row;
+          aiMedium.lastCol = col;
+          //If first hit, assign 4
+          aiMedium.lastDir = (aiMedium.lastDir == null) ? 4 : aiMedium.lastDir;
+        }
       }
       else
       {
         miss_snd.play();
+        //reset to null if all directions checked or initial miss, increment if not
+        aiMedium.lastDir = (aiMedium.lastDir == 3 || aiMedium.lastDir == null) ? null : aiMedium.lastDir+1;
       }
       //update logic
       fired = true;
@@ -452,6 +453,78 @@ function aiFire(difficulty)
   {
       statUpdater(2);
   }
+}
+
+/**
+  * @Return row and column coordinates
+**/
+function _mediumDifficultyMove()
+{
+  /*
+    Helper function for aiFire to simplify medium branch instructions
+      - Fires at random until a ship is hit, then
+      - Searches orthogonally adjacent for subsequent fires, and
+      - If all directions are checked, start firing at random again
+
+      - utilizes aiMedium object declared globally in line 9
+  */
+  //No recent direction, fire random
+  if(aiMedium.lastDir == null)
+  {
+    row = Math.floor(Math.random() * 10);
+    col = Math.floor(Math.random() * 10);
+  }
+  //New hit, start looking up
+  else if(aiMedium.lastDir == 4)
+  {
+    row = aiMedium.lastRow - 1;
+    col = aiMedium.lastCol;
+    aiMedium.lastDir = 0;
+  }
+  //Hit on last turn, keep moving
+  else
+  {
+    //Last hit direction left or right
+    if(aiMedium.lastDir % 2)
+    {
+      //Continue either left or right depending on last hit
+      col = (aiMedium.lastDir % 3) ? aiMedium.lastCol + 1 : aiMedium.lastCol - 1;
+      row = aiMedium.lastRow;
+    }
+    //Last hit up or down
+    else
+    {
+      //Continue either up or down depending on last hit
+      row = (aiMedium.lastDir == 2) ? aiMedium.lastRow + 1 : aiMedium.lastRow - 1;
+      col = aiMedium.lastCol;
+    }
+  }
+  return {
+    'row' : row,
+    'col' : col
+  }
+}
+
+/**
+  * @param row row to check
+  * @param col column to check
+**/
+function _isValidFire(row,col)
+{
+  const aiBoard = game.getBoard(1, hidden=true);
+  try
+  {
+    if(aiBoard[row][col] == -2 || aiBoard[row][col] == -3)
+    {
+      return false;
+    }
+  }
+  catch(error)
+  {
+    console.log(error + " : AI trying new firing coordinates")
+    return false;
+  }
+  return true;
 }
 
 //Preps the players for firing
