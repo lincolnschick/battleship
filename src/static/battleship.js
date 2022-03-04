@@ -409,7 +409,25 @@ function aiFire(difficulty)
   }
   else if(difficulty == 2)
   {
-    alert("HARD");
+    const aiBoard = game.getBoard(1,hidden=false);
+    let stop = false;
+    let counter = 0;
+    for (let i = 0; i < 10; i++) {
+        for (let j = 0; j < 10; j++) {
+            if(aiBoard[i][j] == 1)
+            {
+                row = i;
+                col = j;
+                counter++
+                stop = true;
+                break;
+            }
+        }
+       if(stop==true)
+        {
+            break;
+        }
+    }   
   }
   //only fire once a turn
   if (!fired) {
@@ -417,10 +435,12 @@ function aiFire(difficulty)
       if(game.firedAt(1,row,col))
       {
         hit_snd.play();
-
+        if(difficulty==1)
+        {
           aiMedium.hit = true;
           aiMedium.row = row;
           aiMedium.col = col;
+        }
 
       }
       else
@@ -462,7 +482,6 @@ function _mediumDifficultyMove(move)
       - Fires at random until a ship is hit, then
       - Searches orthogonally adjacent for subsequent fires, and
       - If all directions are checked, start firing at random again
-
       - utilizes aiMedium object declared globally in line 9
   */
   //recent move not a hit, random coordinates
